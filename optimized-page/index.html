@@ -95,12 +95,12 @@
     .video-container iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
 
     /* ===== CAROUSEL ===== */
-    .carousel{width:100%;overflow:hidden;background:#f5f3eb}
+    .carousel{width:100%;overflow:hidden;background:#f5f3eb;padding:0 20px}
     .carousel-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;scroll-behavior:smooth}
     .carousel-track::-webkit-scrollbar{display:none}
-    .carousel-slide{flex:0 0 100%;scroll-snap-align:start;width:100%}
-    .carousel-slide img{width:100%;height:auto;display:block}
-    .carousel-dots{display:flex;justify-content:center;gap:6px;padding:10px 0 14px}
+    .carousel-slide{flex:0 0 100%;scroll-snap-align:start;scroll-snap-stop:always;width:100%}
+    .carousel-slide img{width:100%;height:auto;display:block;border-radius:12px}
+    .carousel-dots{display:flex;justify-content:center;gap:6px;padding:4px 0 10px}
     .dot{width:8px;height:8px;border-radius:50%;border:none;background:#ccc;padding:0;cursor:pointer;transition:background .2s,transform .2s}
     .dot.active{background:#683b11;transform:scale(1.25)}
 
@@ -112,11 +112,11 @@
     [data-aos].aos-animate{opacity:1;transform:translateY(0)}
 
     /* ===== MARKETPLACE ===== */
-    .mp-row{display:flex;justify-content:center;align-items:center;gap:20px;padding:0 16px 8px}
-    .mp-btn{display:flex;align-items:center;justify-content:center;text-decoration:none;flex:1;max-width:250px}
+    .mp-row{display:flex;justify-content:center;align-items:center;gap:12px;padding:0 20px 8px}
+    .mp-btn{display:flex;align-items:center;justify-content:center;text-decoration:none;flex:1;max-width:140px}
     .mp-btn img{display:block;width:100%;height:auto;object-fit:contain}
-    .mp-tiktok-row{display:flex;justify-content:center;padding:0 16px 16px}
-    .mp-tiktok-row .mp-btn{max-width:250px;flex:none}
+    .mp-tiktok-row{display:flex;justify-content:center;padding:0 20px 12px}
+    .mp-tiktok-row .mp-btn{max-width:140px;flex:none}
 
     /* ===== MDC ===== */
     .mdc-section{display:flex;flex-direction:column;align-items:center}
