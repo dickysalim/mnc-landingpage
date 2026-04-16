@@ -27,7 +27,7 @@
     /* ===== RESET ===== */
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     body{max-width:360px;margin:0 auto;font-family:'Poppins',system-ui,-apple-system,sans-serif;background:#fff;color:#222}
-    img{display:block;max-width:100%;width:auto;height:auto}
+    img{display:block;width:100%;height:auto}
     button{cursor:pointer}
 
     /* ===== HEADER ===== */
@@ -55,7 +55,9 @@
     .sidebar-overlay.opaque{opacity:1}
 
     /* ===== SECTION IMAGES ===== */
-    .section-img{display:block;width:100%}
+    .section-img-wrapper{width:100%;overflow:hidden}
+    .section-img-wrapper img{width:100%;height:auto;display:block}
+    .section-img{display:block;width:100%;height:auto}
 
     /* ===== WA BUTTONS ===== */
     .wa-btn-wrapper{padding:20px 0;display:flex;justify-content:center}
@@ -254,11 +256,17 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="sidebar-overlay" id="sidebar-overlay"></div>
 
 <!-- ===== HERO ===== -->
-<img id="trackSection_hookIntro" class="section-img" src="https://mganik-assets.pages.dev/img/vdq0frxtjxwc5xu7vgi7.webp" alt="mGanik Metafiber" fetchpriority="high" loading="eager" decoding="async" width="360" height="640" style="width:100%;height:auto;aspect-ratio:360/640">
+<div class="section-img-wrapper">
+  <img id="trackSection_hookIntro" class="section-img" src="https://mganik-assets.pages.dev/img/vdq0frxtjxwc5xu7vgi7.webp" alt="mGanik Metafiber" fetchpriority="high" loading="eager" decoding="async">
+</div>
 
 <!-- ===== CONTENT IMAGES ===== -->
-<img id="trackSection_pointOfContent" class="section-img" src="https://mganik-assets.pages.dev/img/bjuhkaqjaqn1mls9d1le.webp" alt="Kenapa mGanik Metafiber" loading="lazy" decoding="async" width="420" height="630" style="width:100%;height:auto;aspect-ratio:420/630">
-<img id="trackSection_bridgeToProduct" class="section-img" src="https://mganik-assets.pages.dev/img/e0abqkhmyb2r4gfumz3a.webp" alt="mGanik Produk" loading="lazy" decoding="async" width="420" height="560" style="width:100%;height:auto;aspect-ratio:420/560">
+<div class="section-img-wrapper">
+  <img id="trackSection_pointOfContent" class="section-img" src="https://mganik-assets.pages.dev/img/bjuhkaqjaqn1mls9d1le.webp" alt="Kenapa mGanik Metafiber" loading="lazy" decoding="async">
+</div>
+<div class="section-img-wrapper">
+  <img id="trackSection_bridgeToProduct" class="section-img" src="https://mganik-assets.pages.dev/img/e0abqkhmyb2r4gfumz3a.webp" alt="mGanik Produk" loading="lazy" decoding="async">
+</div>
 
 <!-- ===== MAIN YOUTUBE VIDEO — moved before phase2 for faster LCP ===== -->
 <section class="yt-main-section">
@@ -279,10 +287,14 @@ document.addEventListener('DOMContentLoaded', function() {
 <span id="phase1-end-trigger"></span>
 <div id="phase2-content" style="display:none">
 
-<img id="trackSection_productIntro" class="section-img" src="https://mganik-assets.pages.dev/img/rlhezbc96mrm0gw2dxgi.webp" alt="Pengenalan Produk" loading="lazy" decoding="async" width="420" height="560" style="width:100%;height:auto;aspect-ratio:420/560">
+<div class="section-img-wrapper">
+  <img id="trackSection_productIntro" class="section-img" src="https://mganik-assets.pages.dev/img/rlhezbc96mrm0gw2dxgi.webp" alt="Pengenalan Produk" loading="lazy" decoding="async">
+</div>
 
 <!-- ===== PRODUCT PRICE OFFER ===== -->
-<img id="trackSection_productPriceOffer" class="section-img" src="https://mganik-assets.pages.dev/img/dvjqurqqljftczc9zrku.webp" alt="Harga Spesial mGanik" loading="lazy" decoding="async" width="420" height="560" style="width:100%;height:auto;aspect-ratio:420/560">
+<div class="section-img-wrapper">
+  <img id="trackSection_productPriceOffer" class="section-img" src="https://mganik-assets.pages.dev/img/dvjqurqqljftczc9zrku.webp" alt="Harga Spesial mGanik" loading="lazy" decoding="async">
+</div>
 
 <!-- ===== CCOM MAIN WA BUTTON ===== -->
 <section id="trackSection_ccomMainOffer">
@@ -296,7 +308,9 @@ document.addEventListener('DOMContentLoaded', function() {
 </section>
 
 <!-- ===== CREDIBILITY IMAGE 1 (FIRST — tracker fires here only) ===== -->
-<img id="trackSection_credibilityAndProof" class="section-img" src="https://mganik-assets.pages.dev/img/jjco2emdutmhv48mybks.webp" alt="Bukti Keberhasilan mGanik" loading="lazy" decoding="async" width="420" height="420" style="width:100%;height:auto;aspect-ratio:1/1">
+<div class="section-img-wrapper">
+  <img id="trackSection_credibilityAndProof" class="section-img" src="https://mganik-assets.pages.dev/img/jjco2emdutmhv48mybks.webp" alt="Bukti Keberhasilan mGanik" loading="lazy" decoding="async">
+</div>
 
 <!-- ===== VIDEO TESTIMONIALS (3 YT Facades) ===== -->
 <section id="trackSection_testiVideo">
@@ -343,8 +357,12 @@ document.addEventListener('DOMContentLoaded', function() {
 <p class="disclaimer-text"><b>*disclaimer:</b> Hasil yang didapatkan setiap individu bisa berbeda-beda</p>
 
 <!-- Credibility images -->
-<img class="section-img" src="https://mganik-assets.pages.dev/img/iixziozlt9cb7xhlkagk.webp" alt="Bukti mGanik" loading="lazy" decoding="async" width="420" height="420" style="width:100%;height:auto;aspect-ratio:1/1">
-<img class="section-img" src="https://mganik-assets.pages.dev/img/hwpzb1usbirqihtanjc1.webp" alt="Bukti mGanik" loading="lazy" decoding="async" width="420" height="560" style="width:100%;height:auto;aspect-ratio:420/560">
+<div class="section-img-wrapper">
+  <img class="section-img" src="https://mganik-assets.pages.dev/img/iixziozlt9cb7xhlkagk.webp" alt="Bukti mGanik" loading="lazy" decoding="async">
+</div>
+<div class="section-img-wrapper">
+  <img class="section-img" src="https://mganik-assets.pages.dev/img/hwpzb1usbirqihtanjc1.webp" alt="Bukti mGanik" loading="lazy" decoding="async">
+</div>
 
 <!-- ===== CAROUSEL B — 17 images ===== -->
 <section id="trackSection_testiPhoto2" class="carousel" aria-label="Foto testimoni 2">
@@ -371,8 +389,12 @@ document.addEventListener('DOMContentLoaded', function() {
 </section>
 
 <!-- Credibility images -->
-<img class="section-img" src="https://mganik-assets.pages.dev/img/jqhaz8exlqy1wneckoqd.webp" alt="Bukti mGanik" loading="lazy" decoding="async" width="420" height="420" style="width:100%;height:auto;aspect-ratio:1/1">
-<img class="section-img" src="https://mganik-assets.pages.dev/img/fnbxkxetvbxqsib6xzaw.webp" alt="Bukti mGanik" loading="lazy" decoding="async" width="420" height="560" style="width:100%;height:auto;aspect-ratio:420/560">
+<div class="section-img-wrapper">
+  <img class="section-img" src="https://mganik-assets.pages.dev/img/jqhaz8exlqy1wneckoqd.webp" alt="Bukti mGanik" loading="lazy" decoding="async">
+</div>
+<div class="section-img-wrapper">
+  <img class="section-img" src="https://mganik-assets.pages.dev/img/fnbxkxetvbxqsib6xzaw.webp" alt="Bukti mGanik" loading="lazy" decoding="async">
+</div>
 
 <!-- ===== CAROUSEL C — 12 images ===== -->
 <section id="trackSection_testiPhoto3" class="carousel" aria-label="Foto testimoni 3">
@@ -394,8 +416,12 @@ document.addEventListener('DOMContentLoaded', function() {
 </section>
 
 <!-- Credibility images -->
-<img class="section-img" src="https://mganik-assets.pages.dev/img/uqba6bfq8sveegtayozk.webp" alt="Bukti mGanik" loading="lazy" decoding="async" width="420" height="420" style="width:100%;height:auto;aspect-ratio:1/1">
-<img class="section-img" src="https://mganik-assets.pages.dev/img/qtoqtxxi5ickssjgrtfl.webp" alt="mGanik" loading="lazy" decoding="async" width="420" height="280" style="width:100%;height:auto;aspect-ratio:420/280">
+<div class="section-img-wrapper">
+  <img class="section-img" src="https://mganik-assets.pages.dev/img/uqba6bfq8sveegtayozk.webp" alt="Bukti mGanik" loading="lazy" decoding="async">
+</div>
+<div class="section-img-wrapper">
+  <img class="section-img" src="https://mganik-assets.pages.dev/img/qtoqtxxi5ickssjgrtfl.webp" alt="mGanik" loading="lazy" decoding="async">
+</div>
 
 <!-- ===== CAROUSEL D — 5 images ===== -->
 <section class="carousel" aria-label="Foto testimoni 4">
@@ -410,8 +436,12 @@ document.addEventListener('DOMContentLoaded', function() {
 </section>
 
 <!-- Images before sales channel -->
-<img class="section-img" src="https://mganik-assets.pages.dev/img/ecnrer3kuxgbervwectw.webp" alt="mGanik" loading="lazy" decoding="async" width="420" height="280" style="width:100%;height:auto;aspect-ratio:420/280">
-<img id="trackSection_salesChannel" class="section-img" src="https://mganik-assets.pages.dev/img/mjsouua3pazqyjhsy0wd.webp" alt="Cara Beli mGanik" loading="lazy" decoding="async" width="420" height="420" style="width:100%;height:auto;aspect-ratio:1/1">
+<div class="section-img-wrapper">
+  <img class="section-img" src="https://mganik-assets.pages.dev/img/ecnrer3kuxgbervwectw.webp" alt="mGanik" loading="lazy" decoding="async">
+</div>
+<div class="section-img-wrapper">
+  <img id="trackSection_salesChannel" class="section-img" src="https://mganik-assets.pages.dev/img/mjsouua3pazqyjhsy0wd.webp" alt="Cara Beli mGanik" loading="lazy" decoding="async">
+</div>
 
 <!-- ===== DISTRIBUTOR ACCORDION ===== -->
 <span id="trackSection_accordionDp"></span>
@@ -435,7 +465,9 @@ document.addEventListener('DOMContentLoaded', function() {
 <!-- ===== MDC SECTION ===== -->
 <span id="trackSection_mdcSalesChannel"></span>
 <section class="mdc-section">
-  <img class="section-img" src="https://mganik-assets.pages.dev/img/dwxufi4x8m8t5lst33ie.webp" alt="mGanik Diabetes Corner" loading="lazy" decoding="async" width="420" height="420" style="width:100%;height:auto;aspect-ratio:1/1">
+  <div class="section-img-wrapper">
+    <img class="section-img" src="https://mganik-assets.pages.dev/img/dwxufi4x8m8t5lst33ie.webp" alt="mGanik Diabetes Corner" loading="lazy" decoding="async">
+  </div>
   <div class="wa-btn-wrapper">
     <button id="MDCS-Main-Offer" class="whatsapp-button-mdc"
       data-message="Salam kenal, saya ingin mengunjungi mGanik Diabetes Corner. Boleh dibantu untuk atur Jadwal Kunjungan Saya?"
@@ -446,7 +478,9 @@ document.addEventListener('DOMContentLoaded', function() {
 </section>
 
 <!-- CC sales channel -->
-<img class="section-img" src="https://mganik-assets.pages.dev/img/ogxzqnyq7qtw9pspbwxe.webp" alt="Pesan via Call Center" loading="lazy" decoding="async" width="420" height="280" style="width:100%;height:auto;aspect-ratio:420/280">
+<div class="section-img-wrapper">
+  <img class="section-img" src="https://mganik-assets.pages.dev/img/ogxzqnyq7qtw9pspbwxe.webp" alt="Pesan via Call Center" loading="lazy" decoding="async">
+</div>
 
 <!-- ===== NO OUTLET WA BUTTON ===== -->
 <span id="trackSection_ccomNoOutlet"></span>
@@ -459,7 +493,9 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 
 <!-- ===== MARKETPLACE ===== -->
-<img class="section-img" src="https://mganik-assets.pages.dev/img/b0ra8cqbbwubxyxs7tek.webp" alt="Beli di Marketplace" loading="lazy" decoding="async" width="420" height="280" style="width:100%;height:auto;aspect-ratio:420/280">
+<div class="section-img-wrapper">
+  <img class="section-img" src="https://mganik-assets.pages.dev/img/b0ra8cqbbwubxyxs7tek.webp" alt="Beli di Marketplace" loading="lazy" decoding="async">
+</div>
 <span id="trackSection_mpPusatButtons"></span>
 <section data-aos="fade-up" data-aos-delay="200" style="padding:16px 0 0">
   <div class="mp-row">
@@ -478,7 +514,9 @@ document.addEventListener('DOMContentLoaded', function() {
 </section>
 
 <!-- ===== FOOTER IMAGE ===== -->
-<img id="trackSection_footer" class="section-img" src="https://mganik-assets.pages.dev/img/e4ncbzxj3k8eejrekmw1.webp" alt="mGanik Nutrition" loading="lazy" decoding="async" width="420" height="210" style="width:100%;height:auto;aspect-ratio:420/210">
+<div class="section-img-wrapper">
+  <img id="trackSection_footer" class="section-img" src="https://mganik-assets.pages.dev/img/e4ncbzxj3k8eejrekmw1.webp" alt="mGanik Nutrition" loading="lazy" decoding="async">
+</div>
 
 <!-- ===== FOOTER ===== -->
 <footer class="site-footer">
