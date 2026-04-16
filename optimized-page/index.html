@@ -27,7 +27,7 @@
     /* ===== RESET ===== */
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     body{max-width:360px;margin:0 auto;font-family:'Poppins',system-ui,-apple-system,sans-serif;background:#fff;color:#222}
-    img{display:block;max-width:100%;height:auto}
+    img{display:block;max-width:100%;width:auto;height:auto}
     button{cursor:pointer}
 
     /* ===== HEADER ===== */
@@ -171,6 +171,9 @@
     #mganik-distributor-wrapper .disclaimer{font-size:11px;color:var(--text-muted);font-style:italic;text-align:center;margin-top:16px}
     #mganik-distributor-wrapper .result-header{text-align:center;margin-bottom:15px;color:#333;width:100%}
 
+    /* ===== CONTENT-VISIBILITY (below-fold paint savings) ===== */
+    .carousel,#trackSection_testiVideo,#mganik-distributor-wrapper,.site-footer{content-visibility:auto;contain-intrinsic-size:0 500px}
+
     /* ===== FOOTER ===== */
     .site-footer{background:#683b11;color:#fdf8ee;padding:25px;width:100%}
     .footer-inner{max-width:360px;margin:0 auto;width:100%}
@@ -201,12 +204,24 @@
 <!-- GTM noscript -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P729NVH" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
-<!-- GTM async — loads immediately, does not block rendering -->
+<!-- GTM deferred until first user interaction -->
 <script>
-(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
-var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
-j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
-f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-P729NVH');
+window.dataLayer = window.dataLayer || [];
+document.addEventListener('DOMContentLoaded', function() {
+  var gtmLoaded = false;
+  function loadGTM() {
+    if (gtmLoaded) return;
+    gtmLoaded = true;
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+    var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
+    j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+    f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-P729NVH');
+  }
+  ['scroll','mousemove','touchstart','click'].forEach(function(e) {
+    window.addEventListener(e, loadGTM, {once:true, passive:true});
+  });
+  setTimeout(loadGTM, 4000);
+});
 </script>
 
 <!-- ===== HEADER ===== -->
@@ -245,13 +260,7 @@ f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-P729
 <img id="trackSection_pointOfContent" class="section-img" src="https://mganik-assets.pages.dev/img/bjuhkaqjaqn1mls9d1le.webp" alt="Kenapa mGanik Metafiber" loading="lazy" decoding="async" width="420" height="630" style="width:100%;height:auto;aspect-ratio:420/630">
 <img id="trackSection_bridgeToProduct" class="section-img" src="https://mganik-assets.pages.dev/img/e0abqkhmyb2r4gfumz3a.webp" alt="mGanik Produk" loading="lazy" decoding="async" width="420" height="560" style="width:100%;height:auto;aspect-ratio:420/560">
 
-<!-- Phase 1 ends here. Phase 2 is hidden and revealed as user scrolls. -->
-<span id="phase1-end-trigger"></span>
-<div id="phase2-content" style="display:none">
-
-<img id="trackSection_productIntro" class="section-img" src="https://mganik-assets.pages.dev/img/rlhezbc96mrm0gw2dxgi.webp" alt="Pengenalan Produk" loading="lazy" decoding="async" width="420" height="560" style="width:100%;height:auto;aspect-ratio:420/560">
-
-<!-- ===== MAIN YOUTUBE VIDEO — CLS-safe padding-bottom approach ===== -->
+<!-- ===== MAIN YOUTUBE VIDEO — moved before phase2 for faster LCP ===== -->
 <section class="yt-main-section">
   <div class="yt-main-wrapper">
     <div id="yt-main-container" class="yt-main-ratio" data-vid="s1JdRgjWc3M" role="button" tabindex="0" aria-label="Putar video mGanik Metafiber">
@@ -265,6 +274,12 @@ f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-P729
   </div>
   <i class="yt-description" id="video-description"></i>
 </section>
+
+<!-- Phase 1 ends here. Phase 2 is hidden and revealed as user scrolls. -->
+<span id="phase1-end-trigger"></span>
+<div id="phase2-content" style="display:none">
+
+<img id="trackSection_productIntro" class="section-img" src="https://mganik-assets.pages.dev/img/rlhezbc96mrm0gw2dxgi.webp" alt="Pengenalan Produk" loading="lazy" decoding="async" width="420" height="560" style="width:100%;height:auto;aspect-ratio:420/560">
 
 <!-- ===== PRODUCT PRICE OFFER ===== -->
 <img id="trackSection_productPriceOffer" class="section-img" src="https://mganik-assets.pages.dev/img/dvjqurqqljftczc9zrku.webp" alt="Harga Spesial mGanik" loading="lazy" decoding="async" width="420" height="560" style="width:100%;height:auto;aspect-ratio:420/560">
@@ -663,12 +678,14 @@ document.querySelectorAll('.carousel').forEach(function(wrapper){
     });
   },{root:track,threshold:0.5});
   slides.forEach(function(s){io.observe(s);});
-  /* Auto-advance */
+  /* Auto-advance — only when carousel is visible in viewport */
   var timer=null;
-  function start(){timer=setInterval(function(){goTo((cur+1)%n);},2000);}
+  function start(){if(timer)return;timer=setInterval(function(){goTo((cur+1)%n);},2000);}
   function stop(){clearInterval(timer);timer=null;}
-  start();
-  wrapper.addEventListener('mouseenter',stop);wrapper.addEventListener('mouseleave',start);
+  var visObs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){if(e.isIntersecting)start();else stop();});
+  },{threshold:0.3});
+  visObs.observe(wrapper);
   wrapper.addEventListener('touchstart',stop,{passive:true});
   wrapper.addEventListener('touchend',function(){setTimeout(start,3000);},{passive:true});
 });
