@@ -1,0 +1,96 @@
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  // ----------------------------
+  // CONFIG
+  // ----------------------------
+  var LINE_RATIO = 0.27; // 27% from top of viewport
+
+  // ----------------------------
+  // STATE
+  // ----------------------------
+  var trackers = {}; // id -> { el, name, triggered, prevTop, order }
+  var ticking = false;
+
+  // ----------------------------
+  // Collect targets (case-insensitive)
+  // ----------------------------
+  var nodes = document.querySelectorAll("[id^='trackSection'], [id^='TrackSection']");
+  
+  // 💡 We use these to track uniqueness
+  var addedNames = new Set();
+  var orderCounter = 1;
+
+  for (var i = 0; i < nodes.length; i++) {
+    var id = nodes[i].id;
+    var name = id.replace(/^(trackSection|TrackSection)\s*[-_]\s*/i, "").trim();
+
+    // 💡 Only add this tracker if we haven't already added this NAME
+    if (!addedNames.has(name)) {
+      
+      // 1. Mark this name as added
+      addedNames.add(name);
+
+      // 2. Add the element to our trackers object
+      trackers[id] = {
+        el: nodes[i],
+        name: name || id,
+        triggered: false,
+        prevTop: Number.POSITIVE_INFINITY,
+        order: orderCounter // 3. Use our clean, unique counter
+      };
+
+      // 4. Increment our clean counter
+      orderCounter++;
+    }
+  }
+
+  // ----------------------------
+  // Core: fire when element TOP crosses lineY
+  // ----------------------------
+  function check() {
+    ticking = false;
+    var vh = window.innerHeight || document.documentElement.clientHeight;
+    var lineY = vh * LINE_RATIO;
+
+    for (var id in trackers) {
+      if (!trackers.hasOwnProperty(id)) continue;
+      var t = trackers[id];
+      if (t.triggered || !t.el) continue;
+
+      var rect = t.el.getBoundingClientRect();
+      var top = rect.top;
+
+      if (top <= lineY && t.prevTop > lineY) {
+        t.triggered = true;
+        
+        // push to dataLayer
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          event: "trackSection",
+          section_name: t.name,
+          section_order: t.order // 💡 This order is now guaranteed to be unique
+        });
+
+        // console
+        try {
+          console.log("trackSection triggered:", t.name, "Order:", t.order);
+        } catch (e) {}
+      }
+
+      t.prevTop = top;
+    }
+  }
+
+  function requestCheck() {
+    if (!ticking) {
+      ticking = true;
+      window.requestAnimationFrame(check);
+    }
+  }
+
+  // initial measure + listeners
+  requestCheck();
+  window.addEventListener("scroll", requestCheck, { passive: true });
+  window.addEventListener("resize", requestCheck);
+});
+</script>

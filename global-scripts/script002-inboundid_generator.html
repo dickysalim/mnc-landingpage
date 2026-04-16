@@ -1,0 +1,61 @@
+<script>
+  // 1. Generate the ID
+  const inboundId = (function generateInboundId() {
+    const baseEpoch = Math.floor(new Date().getTime() / 1000.0);
+    const now = Date.now();
+    const shortTime = now - baseEpoch;
+    const timePart = shortTime.toString(36).toUpperCase().slice(-5);
+    const randomPart = Math.random().toString(36).substring(2, 6).toUpperCase();
+    return timePart + randomPart;
+  })();
+
+  // 2. Ensure DataLayer exists
+  window.dataLayer = window.dataLayer || [];
+
+  document.addEventListener('DOMContentLoaded', function () {
+
+    // 3. Simplified Configuration Array (No more getOffer functions!)
+    const buttonConfigs = [
+      {
+        selector: '.whatsapp-button',
+        phone: '6281584021443',
+        prefix: 'CC-',
+        channel: 'CCOM'
+      },
+      {
+        selector: '.whatsapp-button-mdc',
+        phone: '6282195277642',
+        prefix: 'DC-',
+        channel: 'MDCS'
+      }
+    ];
+
+    // 4. The Engine
+    buttonConfigs.forEach(function (config) {
+
+      document.querySelectorAll(config.selector).forEach(function (button) {
+        button.addEventListener('click', function (e) {
+          e.preventDefault();
+
+          // Standardized data pulling for ALL buttons
+          const baseMessage = button.getAttribute('data-message') || '';
+          const offerType = button.getAttribute('data-offer') || '';
+
+          const fullMessage = `${baseMessage}\n\nKode Unik Pelanggan [${config.prefix}${inboundId}]. Jangan Hapus Kode Unik Anda.`;
+          const encodedMessage = encodeURIComponent(fullMessage);
+          const link = `https://wa.me/${config.phone}?text=${encodedMessage}`;
+
+          window.dataLayer.push({
+            event: "leadEvent",
+            inbound_id: `${config.prefix}${inboundId}`,
+            sales_channel: config.channel,
+            offer_type: offerType
+          });
+
+          window.open(link, "_blank");
+        });
+      });
+
+    });
+  });
+</script>

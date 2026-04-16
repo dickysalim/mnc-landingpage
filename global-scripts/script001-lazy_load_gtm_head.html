@@ -1,0 +1,30 @@
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        let gtmLoaded = false;
+
+        function loadGTM() {
+            if (gtmLoaded) return;
+            gtmLoaded = true;
+            console.log('🚀 [Optimizer] User interacted. Loading Google Tag Manager...');
+
+            // Your exact GTM Script with your ID: GTM-P729NVH
+            (function (w, d, s, l, i) {
+                w[l] = w[l] || []; w[l].push({
+                    'gtm.start':
+                        new Date().getTime(), event: 'gtm.js'
+                }); var f = d.getElementsByTagName(s)[0],
+                    j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                        'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+            })(window, document, 'script', 'dataLayer', 'GTM-P729NVH');
+        }
+
+        // Trigger GTM instantly upon any of these user interactions
+        const userEvents = ['scroll', 'mousemove', 'touchstart', 'click'];
+        userEvents.forEach(function (event) {
+            window.addEventListener(event, loadGTM, { once: true, passive: true });
+        });
+
+        // Failsafe: Load GTM after 3.5 seconds even if the user does absolutely nothing
+        setTimeout(loadGTM, 1500);
+    });
+</script>

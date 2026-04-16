@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mGanik Header Sidebar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .bg-mganik {
+            background-color: #683b11;
+        }
+        /* Custom class to hide scrollbar when menu is open if desired, 
+           though we want scrolling to trigger close, so we keep scrolling enabled */
+    </style>
+</head>
+<!-- Added a large height to body so you can test the "Close on Scroll" feature -->
+<body class="bg-gray-100 min-h-[200vh]">
+
+    <!-- Header is RELATIVE (Not Sticky) as requested -->
+    <header class="bg-mganik text-white shadow-md w-full relative z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="https://www.mganiknutrition.com">
+                        <img class="h-10 w-auto object-contain relative -left-[8.5px]" 
+                             src="https://mganik-assets.pages.dev/img/mh5ow3xakq4lpfmge8dk.webp" 
+                             alt="mGanik Nutrition">
+                    </a>
+                </div>
+
+                <!-- Hamburger Button -->
+                <div class="flex items-center">
+                    <button id="mobile-menu-button" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-white hover:bg-white/10 focus:outline-none transition-colors duration-200">
+                        <i data-lucide="menu" class="h-8 w-8 block" id="menu-icon-open"></i>
+                        <!-- We only show the Menu icon here. The Close icon is inside the sidebar. -->
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 
+      SIDEBAR (Fixed/Sticky behavior independent of header) 
+      - translate-x-full: Hides it off-screen to the right by default
+      - translate-x-0:  Will bring it on screen
+    -->
+    <div id="mobile-sidebar" class="fixed top-0 right-0 h-full w-64 bg-mganik text-white shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out z-50">
+        
+        <!-- Sidebar Header (Logo + Close Button) -->
+        <div class="flex justify-between items-center p-4 border-b border-white/10">
+            <span class="font-bold text-lg tracking-wide">MENU</span>
+            <button id="sidebar-close-button" class="p-2 rounded-md hover:bg-white/10 transition-colors">
+                <i data-lucide="x" class="h-6 w-6 text-white"></i>
+            </button>
+        </div>
+
+        <!-- Sidebar Links -->
+        <div class="px-4 py-6 space-y-2">
+            <a href="https://www.mganiknutrition.com/tentang-kami" class="block px-3 py-3 rounded-md text-base font-medium text-white hover:bg-white/10 hover:text-white transition-colors border-b border-white/10">
+                Tentang Kami
+            </a>
+            <a href="https://www.mganiknutrition.com/hubungi-kami" class="block px-3 py-3 rounded-md text-base font-medium text-white hover:bg-white/10 hover:text-white transition-colors">
+                Hubungi Kami
+            </a>
+        </div>
+    </div>
+
+    <!-- Overlay (Optional: click outside to close) -->
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-40 hidden transition-opacity duration-300 opacity-0"></div>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Elements
+        const btnOpen = document.getElementById('mobile-menu-button');
+        const btnClose = document.getElementById('sidebar-close-button');
+        const sidebar = document.getElementById('mobile-sidebar');
+        const overlay = document.getElementById('sidebar-overlay');
+        
+        let isMenuOpen = false;
+
+        // Function to Open Sidebar
+        function openMenu() {
+            isMenuOpen = true;
+            // Slide in
+            sidebar.classList.remove('translate-x-full');
+            sidebar.classList.add('translate-x-0');
+            
+            // Show Overlay
+            overlay.classList.remove('hidden');
+            // Small timeout to allow transition to trigger opacity change
+            setTimeout(() => overlay.classList.remove('opacity-0'), 10);
+        }
+
+        // Function to Close Sidebar
+        function closeMenu() {
+            isMenuOpen = false;
+            // Slide out
+            sidebar.classList.remove('translate-x-0');
+            sidebar.classList.add('translate-x-full');
+
+            // Hide Overlay
+            overlay.classList.add('opacity-0');
+            setTimeout(() => overlay.classList.add('hidden'), 300);
+        }
+
+        // Event Listeners
+        btnOpen.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevent immediate close triggers
+            openMenu();
+        });
+
+        btnClose.addEventListener('click', closeMenu);
+        overlay.addEventListener('click', closeMenu);
+
+        // --- SCROLL LOGIC ---
+        // If user scrolls, close the sidebar immediately
+        window.addEventListener('scroll', () => {
+            if (isMenuOpen) {
+                closeMenu();
+            }
+        });
+    </script>
+</body>
+</html>
