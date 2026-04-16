@@ -26,7 +26,7 @@
   <style>
     /* ===== RESET ===== */
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    body{max-width:425px;margin:0 auto;font-family:'Poppins',system-ui,-apple-system,sans-serif;background:#fff;color:#222}
+    body{max-width:360px;margin:0 auto;font-family:'Poppins',system-ui,-apple-system,sans-serif;background:#fff;color:#222}
     img{display:block;max-width:100%;height:auto}
     button{cursor:pointer}
 
@@ -82,7 +82,7 @@
     .yt-description{display:block;min-height:20px;padding:8px 24px;font-size:12px;font-style:italic;color:#555}
 
     /* Video list (testi) */
-    .video-list{width:100%;max-width:425px;margin:0 auto;padding:20px;background:#f5f3eb}
+    .video-list{width:100%;max-width:360px;margin:0 auto;padding:20px;background:#f5f3eb}
     .video-item{margin-bottom:20px}
     .video-item:last-child{margin-bottom:0}
     .video-container{position:relative;width:100%;padding-bottom:56.25%;height:0;background:#505050;border-radius:8px;overflow:hidden}
@@ -173,7 +173,7 @@
 
     /* ===== FOOTER ===== */
     .site-footer{background:#683b11;color:#fdf8ee;padding:25px;width:100%}
-    .footer-inner{max-width:425px;margin:0 auto;width:100%}
+    .footer-inner{max-width:360px;margin:0 auto;width:100%}
     .footer-top{display:flex;flex-direction:column;gap:40px;margin-bottom:40px;border-bottom:1px solid rgba(253,248,238,.2);padding-bottom:32px}
     .footer-logo{height:48px;width:auto;object-fit:contain}
     .footer-company-name{font-size:.875rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:16px}
@@ -200,6 +200,14 @@
 
 <!-- GTM noscript -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P729NVH" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+<!-- GTM async — loads immediately, does not block rendering -->
+<script>
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
+j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-P729NVH');
+</script>
 
 <!-- ===== HEADER ===== -->
 <header class="site-header">
@@ -236,6 +244,11 @@
 <!-- ===== CONTENT IMAGES ===== -->
 <img id="trackSection_pointOfContent" class="section-img" src="https://mganik-assets.pages.dev/img/bjuhkaqjaqn1mls9d1le.webp" alt="Kenapa mGanik Metafiber" loading="lazy" decoding="async" width="420" height="630" style="width:100%;height:auto;aspect-ratio:420/630">
 <img id="trackSection_bridgeToProduct" class="section-img" src="https://mganik-assets.pages.dev/img/e0abqkhmyb2r4gfumz3a.webp" alt="mGanik Produk" loading="lazy" decoding="async" width="420" height="560" style="width:100%;height:auto;aspect-ratio:420/560">
+
+<!-- Phase 1 ends here. Phase 2 is hidden and revealed as user scrolls. -->
+<span id="phase1-end-trigger"></span>
+<div id="phase2-content" style="display:none">
+
 <img id="trackSection_productIntro" class="section-img" src="https://mganik-assets.pages.dev/img/rlhezbc96mrm0gw2dxgi.webp" alt="Pengenalan Produk" loading="lazy" decoding="async" width="420" height="560" style="width:100%;height:auto;aspect-ratio:420/560">
 
 <!-- ===== MAIN YOUTUBE VIDEO — CLS-safe padding-bottom approach ===== -->
@@ -505,6 +518,8 @@
   </div>
 </footer>
 
+</div><!-- /#phase2-content -->
+
 <!-- ===== ALL SCRIPTS — at end of body, DOM already complete ===== -->
 <script>
 (function(){'use strict';
@@ -516,16 +531,32 @@ var inboundId=(function(){
 })();
 window.inboundId=inboundId;
 
-/* ---------- 2. GTM — DEFERRED ---------- */
-var _gtmLoaded=false;
-function _loadGTM(){
-  if(_gtmLoaded)return;_gtmLoaded=true;
-  var s=document.createElement('script');s.async=true;
-  s.src='https://www.googletagmanager.com/gtm.js?id=GTM-P729NVH';
-  document.head.appendChild(s);
-}
-['scroll','mousemove','touchstart','keydown'].forEach(function(e){window.addEventListener(e,_loadGTM,{once:true,passive:true});});
-setTimeout(_loadGTM,1500);
+/* ---------- 2. GTM already loaded async — fire pageview_confirmed when hero visible ---------- */
+(function(){
+  var hero=document.getElementById('trackSection_hookIntro');
+  if(!hero)return;
+  var obs=new IntersectionObserver(function(entries,o){
+    entries.forEach(function(entry){if(entry.isIntersecting){window.dataLayer.push({event:'pageview_confirmed'});o.disconnect();}});
+  },{threshold:0.1});
+  obs.observe(hero);
+})();
+
+/* ---------- 2b. PHASE 2 REVEAL (200px before trigger enters viewport) ---------- */
+(function(){
+  var phase2=document.getElementById('phase2-content');
+  var trigger=document.getElementById('phase1-end-trigger');
+  if(!phase2||!trigger)return;
+  var obs=new IntersectionObserver(function(entries,o){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        phase2.style.display='block';
+        o.disconnect();
+        if(window._fetchDist)window._fetchDist();
+      }
+    });
+  },{rootMargin:'200px'});
+  obs.observe(trigger);
+})();
 
 /* ---------- 3. SECTION TRACKER ---------- */
 (function(){
@@ -701,11 +732,9 @@ document.querySelectorAll('.carousel').forEach(function(wrapper){
     s.src='https://mganik-cache.pages.dev/prod/mganik-distributors-v1.js';
     document.head.appendChild(s);
   }
-  var distSection=document.getElementById('mganik-mitra-widget');
-  if('IntersectionObserver'in window){
-    var dObs=new IntersectionObserver(function(entries,o){entries.forEach(function(e){if(e.isIntersecting){fetchDist();o.unobserve(e.target);}});},{rootMargin:'2500px 0px'});
-    if(distSection)dObs.observe(distSection);
-  }else{setTimeout(fetchDist,3000);}
+  /* Expose for Phase 2 reveal handler; also fallback timeout */
+  window._fetchDist=fetchDist;
+  setTimeout(fetchDist,5000);
 
   searchInput.addEventListener('input',function(){window.dataLayer.push({event:'searchDp'});},{once:true});
   searchInput.addEventListener('input',debounce(function(){
