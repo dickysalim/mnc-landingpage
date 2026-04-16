@@ -7,20 +7,20 @@
   <meta name="description" content="mGanik Metafiber — suplemen serat premium untuk bantu jaga kadar gula darah. Testimoni nyata, formula terbukti, tersedia di seluruh Indonesia.">
   <link rel="icon" type="image/png" href="https://assets.mganikgroup.com/favicon/favicon-mganik.png">
 
-  <!-- Critical origin preconnects -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- 1. FIRST: Preconnect to image origins -->
   <link rel="preconnect" href="https://mganik-assets.pages.dev">
   <link rel="preconnect" href="https://mganik-cache.pages.dev">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <!-- Hero image preload for fast FCP -->
+  <!-- 2. SECOND: Hero image preload — highest priority -->
   <link rel="preload" as="image" href="https://mganik-assets.pages.dev/img/vdq0frxtjxwc5xu7vgi7.webp" fetchpriority="high">
 
-  <!-- Single Poppins request, non-blocking -->
+  <!-- 3. THIRD: CSS — non-blocking -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"></noscript>
 
-  <!-- dataLayer init only — no GTM yet -->
+  <!-- 4. LAST: GTM dataLayer init only — no GTM script yet -->
   <script>window.dataLayer=window.dataLayer||[];</script>
 
   <style>
@@ -264,13 +264,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <!-- ===== CONTENT IMAGES ===== -->
 <div class="section-img-wrapper">
-  <img id="trackSection_pointOfContent" class="section-img" src="https://mganik-assets.pages.dev/img/bjuhkaqjaqn1mls9d1le.webp" alt="Kenapa mGanik Metafiber" loading="lazy" decoding="async">
+  <img id="trackSection_pointOfContent" class="section-img" src="https://mganik-assets.pages.dev/img/bjuhkaqjaqn1mls9d1le.webp" alt="Kenapa mGanik Metafiber" loading="eager" decoding="async">
 </div>
 <div class="section-img-wrapper">
-  <img id="trackSection_bridgeToProduct" class="section-img" src="https://mganik-assets.pages.dev/img/e0abqkhmyb2r4gfumz3a.webp" alt="mGanik Produk" loading="lazy" decoding="async">
+  <img id="trackSection_bridgeToProduct" class="section-img" src="https://mganik-assets.pages.dev/img/e0abqkhmyb2r4gfumz3a.webp" alt="mGanik Produk" loading="eager" decoding="async">
 </div>
 
-<!-- ===== MAIN YOUTUBE VIDEO — moved before phase2 for faster LCP ===== -->
+<!-- Phase 1 ends here. Phase 2 is hidden and revealed as user scrolls. -->
+<span id="phase1-end-trigger"></span>
+<div id="phase2-content" style="display:none">
+
+<div class="section-img-wrapper">
+  <img id="trackSection_productIntro" class="section-img" src="https://mganik-assets.pages.dev/img/rlhezbc96mrm0gw2dxgi.webp" alt="Pengenalan Produk" loading="lazy" decoding="async">
+</div>
+
+<!-- ===== MAIN YOUTUBE VIDEO ===== -->
 <section class="yt-main-section">
   <div class="yt-main-wrapper">
     <div id="yt-main-container" class="yt-main-ratio" data-vid="s1JdRgjWc3M" role="button" tabindex="0" aria-label="Putar video mGanik Metafiber">
@@ -284,14 +292,6 @@ document.addEventListener('DOMContentLoaded', function() {
   </div>
   <i class="yt-description" id="video-description"></i>
 </section>
-
-<!-- Phase 1 ends here. Phase 2 is hidden and revealed as user scrolls. -->
-<span id="phase1-end-trigger"></span>
-<div id="phase2-content" style="display:none">
-
-<div class="section-img-wrapper">
-  <img id="trackSection_productIntro" class="section-img" src="https://mganik-assets.pages.dev/img/rlhezbc96mrm0gw2dxgi.webp" alt="Pengenalan Produk" loading="lazy" decoding="async">
-</div>
 
 <!-- ===== PRODUCT PRICE OFFER ===== -->
 <div class="section-img-wrapper">
