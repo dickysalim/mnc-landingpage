@@ -594,7 +594,7 @@ window.inboundId=inboundId;
 
 /* ---------- 2. GTM already loaded async — fire pageview_confirmed when hero visible ---------- */
 (function(){
-  var hero=document.getElementById('trackSection_hookIntro');
+  var hero=document.querySelector('.section-tracker[data-section-name="hookIntro"]');
   if(!hero)return;
   var obs=new IntersectionObserver(function(entries,o){
     entries.forEach(function(entry){if(entry.isIntersecting){window.dataLayer.push({event:'pageview_confirmed'});o.disconnect();}});
@@ -613,6 +613,7 @@ window.inboundId=inboundId;
         phase2.style.display='block';
         o.disconnect();
         if(window._fetchDist)window._fetchDist();
+        if(window._refreshTrackers)window._refreshTrackers();
       }
     });
   },{rootMargin:'200px'});
@@ -621,20 +622,36 @@ window.inboundId=inboundId;
 
 /* ---------- 3. section_tracker ---------- */
 (function(){
-  var LINE=0.27,trackers=[],ticking=false,initialized=false;
-  var nodes=document.querySelectorAll('.section-tracker');
-  for(var i=0;i<nodes.length;i++){
-    var name=nodes[i].getAttribute('data-section-name')||('section_'+(i+1));
-    trackers.push({el:nodes[i],name:name,order:i+1,triggered:false,prevTop:Infinity});
+  var LINE=0.27,trackers=[],ticking=false,baselineSet=false;
+
+  function buildTrackers(){
+    var nodes=document.querySelectorAll('.section-tracker');
+    for(var i=0;i<nodes.length;i++){
+      var name=nodes[i].getAttribute('data-section-name')||('section_'+(i+1));
+      /* skip if already registered */
+      var exists=false;
+      for(var j=0;j<trackers.length;j++){if(trackers[j].name===name){exists=true;break;}}
+      if(!exists)trackers.push({el:nodes[i],name:name,triggered:false,prevTop:Infinity});
+    }
+    /* recalculate order by DOM position */
+    trackers.sort(function(a,b){
+      var ar=a.el.getBoundingClientRect().top+window.scrollY;
+      var br=b.el.getBoundingClientRect().top+window.scrollY;
+      return ar-br;
+    });
+    for(var i=0;i<trackers.length;i++){trackers[i].order=i+1;}
   }
+
+  function setBaseline(){
+    for(var i=0;i<trackers.length;i++){
+      trackers[i].prevTop=trackers[i].el.getBoundingClientRect().top;
+    }
+    baselineSet=true;
+  }
+
   function check(){
     ticking=false;
     var vh=window.innerHeight||document.documentElement.clientHeight,lineY=vh*LINE;
-    if(!initialized){
-      for(var i=0;i<trackers.length;i++){trackers[i].prevTop=trackers[i].el.getBoundingClientRect().top;}
-      initialized=true;
-      return;
-    }
     for(var i=0;i<trackers.length;i++){
       var t=trackers[i];if(t.triggered||!t.el)continue;
       var top=t.el.getBoundingClientRect().top;
@@ -642,14 +659,30 @@ window.inboundId=inboundId;
       t.prevTop=top;
     }
   }
+
   function req(){if(ticking)return;ticking=true;requestAnimationFrame(check);}
+
   function activate(){
-    if(initialized)return;
-    req();
+    buildTrackers();
+    setBaseline();
     window.addEventListener('scroll',req,{passive:true});
     window.addEventListener('resize',req);
   }
+
   ['scroll','touchstart','click'].forEach(function(e){window.addEventListener(e,activate,{once:true,passive:true});});
+
+  /* called by Phase 2 reveal to register newly visible trackers */
+  window._refreshTrackers=function(){
+    buildTrackers();
+    /* fire any Phase 2 sections already in view */
+    var vh=window.innerHeight||document.documentElement.clientHeight,lineY=vh*LINE;
+    for(var i=0;i<trackers.length;i++){
+      var t=trackers[i];if(t.triggered)continue;
+      var top=t.el.getBoundingClientRect().top;
+      t.prevTop=top;
+      if(top<=lineY){t.triggered=true;window.dataLayer.push({event:'trackSection',section_name:t.name,section_order:t.order});}
+    }
+  };
 })();
 
 /* ---------- 4. ccom_mdcs_button_handler ---------- */
