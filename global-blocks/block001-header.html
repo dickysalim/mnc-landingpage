@@ -1,129 +1,259 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>mGanik Header Sidebar</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        .bg-mganik {
-            background-color: #683b11;
-        }
-        /* Custom class to hide scrollbar when menu is open if desired, 
-           though we want scrolling to trigger close, so we keep scrolling enabled */
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>mGanik Metafiber — Solusi Gula Darah &amp; Diabetes</title>
+  <meta name="description" content="mGanik Metafiber — suplemen serat premium untuk bantu jaga kadar gula darah. Testimoni nyata, formula terbukti, tersedia di seluruh Indonesia.">
+  <link rel="icon" type="image/png" href="https://assets.mganikgroup.com/favicon/favicon-mganik.png">
+
+  <!-- 1. FIRST: Preconnect to image origins -->
+  <link rel="preconnect" href="https://mganik-assets.pages.dev">
+  <link rel="preconnect" href="https://mganik-cache.pages.dev">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- 2. SECOND: Hero image preload — highest priority -->
+  <link rel="preload" as="image" href="https://mganik-assets.pages.dev/img/vdq0frxtjxwc5xu7vgi7.webp" fetchpriority="high">
+
+  <!-- 3. THIRD: CSS — non-blocking -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"></noscript>
+
+  <!-- 4. LAST: GTM dataLayer init only — no GTM script yet -->
+  <script>window.dataLayer=window.dataLayer||[];</script>
+
+  <style>
+    /* ===== RESET ===== */
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{max-width:480px;margin:0 auto;font-family:'Poppins',system-ui,-apple-system,sans-serif;background:#fff;color:#222}
+    img{display:block;height:auto}
+    button{cursor:pointer}
+
+    /* ===== HEADER ===== */
+    .site-header{background:#683b11;color:#fff;width:100%;position:relative;z-index:40}
+    .header-inner{display:flex;justify-content:space-between;align-items:center;height:64px;padding:0 16px}
+    .header-logo{height:40px;width:auto;object-fit:contain;position:relative;left:-8.5px}
+    .hamburger-btn{background:transparent;border:none;padding:8px;border-radius:6px;color:#fff;display:flex;align-items:center;justify-content:center;transition:background .2s}
+    .hamburger-btn:hover{background:rgba(255,255,255,.1)}
+    .hamburger-btn svg{width:32px;height:32px}
+
+    /* Sidebar */
+    .sidebar{position:fixed;top:0;right:0;height:100%;width:256px;background:#683b11;color:#fff;box-shadow:-4px 0 24px rgba(0,0,0,.3);transform:translateX(100%);transition:transform .3s ease-in-out;z-index:50}
+    .sidebar.open{transform:translateX(0)}
+    .sidebar-header{display:flex;justify-content:space-between;align-items:center;padding:16px;border-bottom:1px solid rgba(255,255,255,.1)}
+    .sidebar-title{font-weight:700;font-size:1.125rem;letter-spacing:.05em}
+    .sidebar-close{background:transparent;border:none;padding:8px;border-radius:6px;color:#fff;transition:background .2s}
+    .sidebar-close:hover{background:rgba(255,255,255,.1)}
+    .sidebar-close svg{width:24px;height:24px}
+    .sidebar-nav{padding:24px 16px}
+    .sidebar-nav a{display:block;padding:12px;border-radius:6px;font-size:.9375rem;font-weight:500;color:#fff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.1);transition:background .2s}
+    .sidebar-nav a:last-child{border-bottom:none}
+    .sidebar-nav a:hover{background:rgba(255,255,255,.1)}
+    .sidebar-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:40;display:none;opacity:0;transition:opacity .3s}
+    .sidebar-overlay.visible{display:block}
+    .sidebar-overlay.opaque{opacity:1}
+
+    /* ===== SECTION IMAGES ===== */
+    .section-img-wrapper{width:100%;overflow:hidden}
+    .section-img-wrapper img{width:100%;height:auto;display:block}
+    .section-img{display:block;width:100%;height:auto}
+    .carousel-slide img{width:100%;height:auto}
+    .mp-btn img{width:100%;height:auto}
+
+    /* ===== WA BUTTONS ===== */
+    .wa-btn-wrapper{padding:20px 0;display:flex;justify-content:center}
+    .whatsapp-button,.whatsapp-button-mdc{background:transparent;border:none;padding:0;cursor:pointer;display:block}
+    .whatsapp-button img,.whatsapp-button-mdc img{display:block}
+
+    /* ===== YOUTUBE FACADE (inline video-list only) ===== */
+    .yt-facade{position:absolute;inset:0;width:100%;height:100%;cursor:pointer;background:#000}
+    .yt-facade img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:opacity .2s}
+    .yt-facade:hover img{opacity:.85}
+    .yt-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:60px;height:42px;background:rgba(0,0,0,.7);border:none;border-radius:12px;display:flex;align-items:center;justify-content:center;pointer-events:none;transition:background .15s}
+    .yt-facade:hover .yt-play,.yt-main-play:hover{background:rgba(0,0,0,.9)}
+    .yt-play::after,.yt-main-play::after{content:'';border-style:solid;border-width:10px 0 10px 18px;border-color:transparent transparent transparent #fff;margin-left:3px}
+    .yt-facade iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+
+    /* Main YT section — CLS-safe with padding-bottom trick */
+    .yt-main-section{background:#fbf4db;padding:16px 0 0}
+    .yt-main-wrapper{padding:0 24px}
+    .yt-main-ratio{position:relative;width:100%;padding-bottom:56.25%;background:#000;border-radius:8px;overflow:hidden;cursor:pointer}
+    .yt-main-ratio img{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;display:block;transition:opacity .2s}
+    .yt-main-ratio:hover img{opacity:.85}
+    .yt-main-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:60px;height:42px;background:rgba(0,0,0,.7);border:none;border-radius:12px;display:flex;align-items:center;justify-content:center;pointer-events:none;transition:background .15s}
+    .yt-main-ratio iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+    .yt-description{display:block;min-height:20px;padding:8px 24px;font-size:12px;font-style:italic;color:#555}
+
+    /* Video list (testi) */
+    .video-list{width:100%;margin:0 auto;padding:20px;background:#f5f3eb}
+    .video-item{margin-bottom:20px}
+    .video-item:last-child{margin-bottom:0}
+    .video-container{position:relative;width:100%;padding-bottom:56.25%;height:0;background:#505050;border-radius:8px;overflow:hidden}
+    .video-container .yt-facade{position:absolute;inset:0;width:100%;height:100%;aspect-ratio:auto;border-radius:0}
+    .video-container .yt-facade img{position:absolute;inset:0;width:100%;height:100%}
+    .video-container iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+
+    /* ===== CAROUSEL ===== */
+    .carousel{width:100%;overflow:hidden;background:#f5f3eb;padding:0 20px}
+    .carousel-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;scroll-behavior:smooth}
+    .carousel-track::-webkit-scrollbar{display:none}
+    .carousel-slide{flex:0 0 100%;scroll-snap-align:start;scroll-snap-stop:always;width:100%}
+    .carousel-slide img{width:100%;height:auto;display:block;border-radius:12px;aspect-ratio:1/1;object-fit:contain}
+    .carousel-dots{display:flex;justify-content:center;gap:6px;padding:4px 0 10px}
+    .dot{width:8px;height:8px;border-radius:50%;border:none;background:#ccc;padding:0;cursor:pointer;transition:background .2s,transform .2s}
+    .dot.active{background:#683b11;transform:scale(1.25)}
+
+    /* ===== DISCLAIMER ===== */
+    .disclaimer-text{font-size:15px;font-style:italic;padding:0 20px 10px;background:#f5f3eb}
+
+    /* ===== AOS FADE-UP ===== */
+    [data-aos]{opacity:0;transform:translateY(24px);transition:opacity .6s ease .2s,transform .6s ease .2s}
+    .section-tracker{display:block;height:0;overflow:hidden}
+    [data-aos].aos-animate{opacity:1;transform:translateY(0)}
+
+    /* ===== MARKETPLACE ===== */
+    .mp-row{display:flex;justify-content:center;align-items:center;gap:12px;padding:0 20px 8px}
+    .mp-btn{display:flex;align-items:center;justify-content:center;text-decoration:none;flex:1;max-width:140px}
+    .mp-btn img{display:block;width:100%;height:auto;object-fit:contain}
+    .mp-tiktok-row{display:flex;justify-content:center;padding:0 20px 12px}
+    .mp-tiktok-row .mp-btn{max-width:140px;flex:none}
+
+    /* ===== MDC ===== */
+    .mdc-section{display:flex;flex-direction:column;align-items:center}
+
+    /* ===== DISTRIBUTOR ===== */
+    #mganik-distributor-wrapper{font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;padding:20px;background:#fff}
+    #mganik-distributor-wrapper *{box-sizing:border-box}
+    #mganik-distributor-wrapper .search-container{position:relative;max-width:400px;margin:0 auto 30px}
+    #mganik-distributor-wrapper .input-wrapper{position:relative;width:100%}
+    #mganik-distributor-wrapper .search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:20px;height:20px;color:#C8913E;pointer-events:none;z-index:5}
+    #mganik-distributor-wrapper input[type="text"]{width:100%;padding:14px 14px 14px 44px;font-size:16px;border:2px solid #C8913E;border-radius:8px;background:#fff;transition:all .3s;margin:0;outline:none}
+    #mganik-distributor-wrapper input[type="text"]:focus{border-color:#C8913E;box-shadow:0 0 0 3px rgba(200,145,62,.2)}
+    #mganik-distributor-wrapper .suggestions-list{position:absolute;top:100%;left:0;right:0;background:#fff;border:1px solid #ddd;border-top:none;border-radius:0 0 8px 8px;max-height:200px;overflow-y:auto;margin:0;padding:0;list-style:none;z-index:10;box-shadow:0 4px 6px rgba(0,0,0,.1);display:none}
+    #mganik-distributor-wrapper .suggestions-list li{padding:12px;cursor:pointer;border-bottom:1px solid #eee;margin:0}
+    #mganik-distributor-wrapper .suggestions-list li:last-child{border-bottom:none}
+    #mganik-distributor-wrapper .suggestions-list li:hover{background:#f1f1f1}
+    #mganik-distributor-wrapper .not-found-msg{margin-top:15px;padding:12px;background:#ffebee;color:#c62828;border-radius:8px;font-size:14px;display:none;line-height:1.5}
+    #mganik-distributor-wrapper .loading-status{font-size:12px;color:#666;text-align:center;margin-bottom:10px}
+    #mganik-distributor-wrapper #accordionContainer{max-width:360px;margin:0 auto;width:100%}
+    #mganik-distributor-wrapper .acc-prov-item{margin-bottom:10px;border:none;border-radius:8px;overflow:hidden;background:#fff}
+    #mganik-distributor-wrapper .acc-prov-header{background:#C8913E;color:#fff;padding:15px;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-size:16px}
+    #mganik-distributor-wrapper .acc-prov-header::after{content:'\25BC';font-size:12px;transition:transform .3s}
+    #mganik-distributor-wrapper .acc-prov-header.active::after{transform:rotate(-180deg)}
+    #mganik-distributor-wrapper .acc-city-item{margin-bottom:8px;border:none;border-radius:6px;overflow:hidden;background:#fff}
+    #mganik-distributor-wrapper .acc-city-header{padding:12px 15px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-size:15px;color:#333;background:#eee}
+    #mganik-distributor-wrapper .acc-city-header::after{content:'\25BC';font-size:10px;transition:transform .3s;color:#666}
+    #mganik-distributor-wrapper .acc-city-header.active::after{transform:rotate(-180deg)}
+    #mganik-distributor-wrapper .acc-prov-body,#mganik-distributor-wrapper .acc-city-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .2s ease-out;background:#f9f9f9}
+    #mganik-distributor-wrapper .acc-city-body{background:#fff}
+    #mganik-distributor-wrapper .acc-prov-body.open,#mganik-distributor-wrapper .acc-city-body.open{grid-template-rows:1fr}
+    #mganik-distributor-wrapper .acc-prov-body-inner,#mganik-distributor-wrapper .acc-city-body-inner{overflow:hidden}
+    #mganik-distributor-wrapper .acc-city-content{padding:15px;display:flex;flex-direction:column;gap:20px;align-items:center}
+    #mganik-distributor-wrapper #mganik-mitra-widget{--brand-primary:#C8913E;--brand-link:#3d6fc6;--brand-wa:#15c418;--text-main:#222;--text-muted:#666;--border-color:#ebebeb;width:100%;display:flex;flex-direction:column;align-items:center;line-height:1.2}
+    #mganik-distributor-wrapper #searchResultsContainer{width:100%;display:flex;flex-direction:column;align-items:center;gap:20px}
+    #mganik-distributor-wrapper .mobile-wrapper{width:100%;max-width:360px;margin:0 auto}
+    #mganik-distributor-wrapper .store-card{background:#fff;border:1px solid #C8913E;border-radius:12px;padding:24px;display:flex;flex-direction:column}
+    #mganik-distributor-wrapper .card-header{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+    #mganik-distributor-wrapper .avatar{width:52px;height:52px;border-radius:50%;object-fit:cover}
+    #mganik-distributor-wrapper .store-name{font-size:16px;font-weight:700;color:var(--text-main);margin-bottom:4px}
+    #mganik-distributor-wrapper .star-badge{background:var(--brand-primary);color:#fff;font-size:10px;font-weight:700;padding:4px 8px;border-radius:6px;display:inline-flex;align-items:center}
+    #mganik-distributor-wrapper .card-address{display:flex;gap:10px;margin-bottom:4px}
+    #mganik-distributor-wrapper .address-text{font-size:13px;color:#000;line-height:1.4;margin-bottom:6px}
+    #mganik-distributor-wrapper .maps-link{font-size:13px;color:var(--brand-link);font-weight:700;text-decoration:none;cursor:pointer}
+    #mganik-distributor-wrapper .mganik-separator-line{height:1px;background:var(--border-color);margin:12px 0}
+    #mganik-distributor-wrapper .section-label{font-size:12px;color:var(--text-muted);font-weight:600;margin-bottom:10px}
+    #mganik-distributor-wrapper .shipping-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
+    #mganik-distributor-wrapper .tag{display:inline-flex;align-items:center;padding:3px 6px;border-radius:4px;background:#fff;border:1px solid var(--border-color)}
+    #mganik-distributor-wrapper .tag img{height:11px;width:auto;object-fit:contain}
+    #mganik-distributor-wrapper .btn-container{position:relative;margin-bottom:24px}
+    #mganik-distributor-wrapper .btn-wa{width:100%;background:var(--brand-wa);color:#fff;border-radius:10px;padding:14px;font-size:14px;font-weight:600;display:flex;justify-content:center;align-items:center;gap:10px;cursor:pointer;text-decoration:none}
+    #mganik-distributor-wrapper .marketplace-title{font-size:12px;color:var(--text-muted);font-weight:600;text-align:center;margin-bottom:12px}
+    #mganik-distributor-wrapper .marketplace-icons-inline{display:flex;justify-content:center;align-items:center;gap:20px}
+    #mganik-distributor-wrapper .icon-market{display:inline-block;cursor:pointer;transition:transform .2s}
+    #mganik-distributor-wrapper .icon-market:active{transform:scale(.95)}
+    #mganik-distributor-wrapper .icon-market img{width:32px;height:32px;object-fit:contain;border-radius:6px}
+    #mganik-distributor-wrapper .disclaimer{font-size:11px;color:var(--text-muted);font-style:italic;text-align:center;margin-top:16px}
+    #mganik-distributor-wrapper .result-header{text-align:center;margin-bottom:15px;color:#333;width:100%}
+
+    /* ===== CONTENT-VISIBILITY (below-fold paint savings) ===== */
+    .carousel,#mganik-distributor-wrapper,.site-footer{content-visibility:auto;contain-intrinsic-size:auto 600px}
+
+    /* ===== FOOTER ===== */
+    .site-footer{background:#683b11;color:#fdf8ee;padding:25px;width:100%}
+    .footer-inner{max-width:360px;margin:0 auto;width:100%}
+    .footer-top{display:flex;flex-direction:column;gap:40px;margin-bottom:40px;border-bottom:1px solid rgba(253,248,238,.2);padding-bottom:32px}
+    .footer-logo{height:48px;width:auto;object-fit:contain}
+    .footer-company-name{font-size:.875rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:16px}
+    .footer-info{font-size:.875rem;line-height:1.6}
+    .footer-info p{margin-top:8px}
+    .footer-info a{color:#fdf8ee;text-decoration:underline;text-decoration-style:dotted;word-break:break-all}
+    .footer-info a:hover{color:#fde68a}
+    .footer-section-title{font-size:1.125rem;font-weight:700;margin-bottom:16px;border-bottom:1px solid rgba(253,248,238,.3);padding-bottom:8px;display:inline-block}
+    .footer-links{list-style:none}
+    .footer-links li{margin-bottom:12px}
+    .footer-links a{font-size:.875rem;color:#fdf8ee;text-decoration:none;transition:color .2s}
+    .footer-links a:hover{color:#fde68a}
+    .footer-disclaimer{margin-bottom:32px}
+    .footer-disclaimer-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;opacity:.7;margin-bottom:8px}
+    .footer-disclaimer-text{font-size:10px;opacity:.8;line-height:1.6;text-align:justify}
+    .footer-bottom{padding-top:16px;border-top:1px solid rgba(253,248,238,.2);font-size:.75rem;display:flex;flex-direction:column;align-items:center;opacity:.8;gap:24px}
+    .footer-social{display:flex;align-items:center;gap:20px}
+    .footer-social a{color:#fdf8ee;display:flex;transition:color .2s}
+    .footer-social a:hover{color:#fde68a}
+    .footer-social svg{width:20px;height:20px;fill:currentColor}
+  </style>
 </head>
-<!-- Added a large height to body so you can test the "Close on Scroll" feature -->
-<body class="bg-gray-100 min-h-[200vh]">
+<body>
 
-    <!-- Header is RELATIVE (Not Sticky) as requested -->
-    <header class="bg-mganik text-white shadow-md w-full relative z-40">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                
-                <!-- Logo -->
-                <div class="flex-shrink-0 flex items-center">
-                    <a href="https://www.mganiknutrition.com">
-                        <img class="h-10 w-auto object-contain relative -left-[8.5px]" 
-                             src="https://mganik-assets.pages.dev/img/mh5ow3xakq4lpfmge8dk.webp" 
-                             alt="mGanik Nutrition">
-                    </a>
-                </div>
+<!-- GTM noscript -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P729NVH" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
-                <!-- Hamburger Button -->
-                <div class="flex items-center">
-                    <button id="mobile-menu-button" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-white hover:bg-white/10 focus:outline-none transition-colors duration-200">
-                        <i data-lucide="menu" class="h-8 w-8 block" id="menu-icon-open"></i>
-                        <!-- We only show the Menu icon here. The Close icon is inside the sidebar. -->
-                    </button>
-                </div>
-            </div>
-        </div>
-    </header>
+<!-- GTM deferred until first user interaction -->
+<script>
+window.dataLayer = window.dataLayer || [];
+document.addEventListener('DOMContentLoaded', function() {
+  var gtmLoaded = false;
+  function loadGTM() {
+    if (gtmLoaded) return;
+    gtmLoaded = true;
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+    var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
+    j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+    f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-P729NVH');
+  }
+  ['scroll','mousemove','touchstart','click'].forEach(function(e) {
+    window.addEventListener(e, loadGTM, {once:true, passive:true});
+  });
+  setTimeout(loadGTM, 4000);
+});
+</script>
 
-    <!-- 
-      SIDEBAR (Fixed/Sticky behavior independent of header) 
-      - translate-x-full: Hides it off-screen to the right by default
-      - translate-x-0:  Will bring it on screen
-    -->
-    <div id="mobile-sidebar" class="fixed top-0 right-0 h-full w-64 bg-mganik text-white shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out z-50">
-        
-        <!-- Sidebar Header (Logo + Close Button) -->
-        <div class="flex justify-between items-center p-4 border-b border-white/10">
-            <span class="font-bold text-lg tracking-wide">MENU</span>
-            <button id="sidebar-close-button" class="p-2 rounded-md hover:bg-white/10 transition-colors">
-                <i data-lucide="x" class="h-6 w-6 text-white"></i>
-            </button>
-        </div>
-
-        <!-- Sidebar Links -->
-        <div class="px-4 py-6 space-y-2">
-            <a href="https://www.mganiknutrition.com/tentang-kami" class="block px-3 py-3 rounded-md text-base font-medium text-white hover:bg-white/10 hover:text-white transition-colors border-b border-white/10">
-                Tentang Kami
-            </a>
-            <a href="https://www.mganiknutrition.com/hubungi-kami" class="block px-3 py-3 rounded-md text-base font-medium text-white hover:bg-white/10 hover:text-white transition-colors">
-                Hubungi Kami
-            </a>
-        </div>
-    </div>
-
-    <!-- Overlay (Optional: click outside to close) -->
-    <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-40 hidden transition-opacity duration-300 opacity-0"></div>
-
-    <script>
-        // Initialize Lucide Icons
-        lucide.createIcons();
-
-        // Elements
-        const btnOpen = document.getElementById('mobile-menu-button');
-        const btnClose = document.getElementById('sidebar-close-button');
-        const sidebar = document.getElementById('mobile-sidebar');
-        const overlay = document.getElementById('sidebar-overlay');
-        
-        let isMenuOpen = false;
-
-        // Function to Open Sidebar
-        function openMenu() {
-            isMenuOpen = true;
-            // Slide in
-            sidebar.classList.remove('translate-x-full');
-            sidebar.classList.add('translate-x-0');
-            
-            // Show Overlay
-            overlay.classList.remove('hidden');
-            // Small timeout to allow transition to trigger opacity change
-            setTimeout(() => overlay.classList.remove('opacity-0'), 10);
-        }
-
-        // Function to Close Sidebar
-        function closeMenu() {
-            isMenuOpen = false;
-            // Slide out
-            sidebar.classList.remove('translate-x-0');
-            sidebar.classList.add('translate-x-full');
-
-            // Hide Overlay
-            overlay.classList.add('opacity-0');
-            setTimeout(() => overlay.classList.add('hidden'), 300);
-        }
-
-        // Event Listeners
-        btnOpen.addEventListener('click', (e) => {
-            e.stopPropagation(); // Prevent immediate close triggers
-            openMenu();
-        });
-
-        btnClose.addEventListener('click', closeMenu);
-        overlay.addEventListener('click', closeMenu);
-
-        // --- SCROLL LOGIC ---
-        // If user scrolls, close the sidebar immediately
-        window.addEventListener('scroll', () => {
-            if (isMenuOpen) {
-                closeMenu();
-            }
-        });
-    </script>
-</body>
-</html>
+<!-- ===== HEADER ===== -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="https://www.mganiknutrition.com">
+      <img class="header-logo" src="https://mganik-assets.pages.dev/img/mh5ow3xakq4lpfmge8dk.webp" alt="mGanik Nutrition" loading="eager" width="120" height="40">
+    </a>
+    <button class="hamburger-btn" id="hamburger-btn" type="button" aria-label="Buka menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+  </div>
+</header>
+<div class="sidebar" id="sidebar" aria-hidden="true">
+  <div class="sidebar-header">
+    <span class="sidebar-title">MENU</span>
+    <button class="sidebar-close" id="sidebar-close" aria-label="Tutup menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+  </div>
+  <nav class="sidebar-nav">
+    <a href="https://www.mganiknutrition.com/tentang-kami">Tentang Kami</a>
+    <a href="https://www.mganiknutrition.com/hubungi-kami">Hubungi Kami</a>
+  </nav>
+</div>
+<div class="sidebar-overlay" id="sidebar-overlay"></div>
