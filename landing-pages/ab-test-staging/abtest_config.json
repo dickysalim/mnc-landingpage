@@ -1,0 +1,7 @@
+{
+  "enabled": true,
+  "variants": [
+    { "id": "variant-ah3kl", "weight": 50 },
+    { "id": "variant-ki45d", "weight": 50 }
+  ]
+}
