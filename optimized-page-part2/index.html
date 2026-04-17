@@ -667,6 +667,12 @@ window.inboundId=inboundId;
   function activate(){
     buildTrackers();
     setBaseline();
+    /* fire sections already inside the trigger zone on load (e.g. hookIntro) */
+    var vh=window.innerHeight||document.documentElement.clientHeight,lineY=vh*LINE;
+    for(var i=0;i<trackers.length;i++){
+      var t=trackers[i];if(t.triggered)continue;
+      if(t.prevTop<=lineY){t.triggered=true;window.dataLayer.push({event:'trackSection',section_name:t.name,section_order:t.order});}
+    }
     window.addEventListener('scroll',req,{passive:true});
     window.addEventListener('resize',req);
   }
