@@ -28,18 +28,32 @@ export default {
       }
     };
 
-    const [headerHtml, block003Html, footerHtml] = await Promise.all([
+    // Load manifest and fixed blocks in parallel
+    const [manifestText, headerHtml, footerHtml] = await Promise.all([
+      fetchBlock('/global-blocks/blocks-manifest.json'),
       fetchBlock('/global-blocks/block001-header.html'),
-      fetchBlock('/global-blocks/block003-product_pitch_long.html'),
       fetchBlock('/global-blocks/block002-footer.html'),
     ]);
+
+    // Parse manifest — fallback to empty object if something goes wrong
+    let manifest = {};
+    try { manifest = JSON.parse(manifestText); } catch {}
 
     return new HTMLRewriter()
       .on('#global-header', {
         element(el) { el.replace(headerHtml, { html: true }); }
       })
-      .on('#global-block003', {
-        element(el) { el.replace(block003Html, { html: true }); }
+      .on('#global-block', {
+        async element(el) {
+          const blockId = el.getAttribute('data-block');
+          const blockFile = manifest[blockId];
+          if (blockFile) {
+            const blockHtml = await fetchBlock('/global-blocks/' + blockFile);
+            el.replace(blockHtml, { html: true });
+          } else {
+            el.remove();
+          }
+        }
       })
       .on('#global-footer', {
         element(el) { el.replace(footerHtml, { html: true }); }
