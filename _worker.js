@@ -7,7 +7,10 @@ export default {
       return env.ASSETS.fetch(request);
     }
 
-    const response = await env.ASSETS.fetch(request);
+    // Rewrite URL to look inside landing-pages/
+    const rewrittenUrl = new URL(request.url);
+    rewrittenUrl.pathname = '/landing-pages' + url.pathname;
+    const response = await env.ASSETS.fetch(new Request(rewrittenUrl.toString(), request));
 
     // Only rewrite HTML responses
     if (!response.headers.get('content-type')?.includes('text/html')) {
