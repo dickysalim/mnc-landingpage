@@ -305,7 +305,6 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 
 <!-- ===== CCOM MAIN WA BUTTON ===== -->
-<span class="section-tracker" data-section-name="ccomMainOffer"></span>
 <section>
   <div class="wa-btn-wrapper">
     <button id="CCOM-Main-Offer" class="whatsapp-button"
@@ -323,7 +322,6 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 
 <!-- ===== VIDEO TESTIMONIALS (3 YT Facades) ===== -->
-<span class="section-tracker" data-section-name="testiVideo"></span>
 <section>
   <div class="video-list">
     <div class="video-item">
@@ -356,7 +354,6 @@ document.addEventListener('DOMContentLoaded', function() {
 <p class="disclaimer-text"><b>*disclaimer:</b> Hasil yang didapatkan setiap individu bisa berbeda-beda</p>
 
 <!-- ===== CAROUSEL A — 3 images ===== -->
-<span class="section-tracker" data-section-name="testiPhoto1"></span>
 <section class="carousel" aria-label="Foto testimoni 1">
   <div class="carousel-track" role="list">
     <div class="carousel-slide" role="listitem"><img src="https://mganik-assets.pages.dev/img/ejgj7qh85gqppzvvk1rt.webp" loading="lazy" alt="Testimoni" width="420" height="560"></div>
@@ -377,7 +374,6 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 
 <!-- ===== CAROUSEL B — 17 images ===== -->
-<span class="section-tracker" data-section-name="testiPhoto2"></span>
 <section class="carousel" aria-label="Foto testimoni 2">
   <div class="carousel-track" role="list">
     <div class="carousel-slide" role="listitem"><img src="https://mganik-assets.pages.dev/img/ricwqskzhegtwuq9vr2x.webp" loading="lazy" alt="Testimoni" width="420" height="560"></div>
@@ -410,7 +406,6 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 
 <!-- ===== CAROUSEL C — 12 images ===== -->
-<span class="section-tracker" data-section-name="testiPhoto3"></span>
 <section class="carousel" aria-label="Foto testimoni 3">
   <div class="carousel-track" role="list">
     <div class="carousel-slide" role="listitem"><img src="https://mganik-assets.pages.dev/img/ei02aznjfuya7hasbw9u.webp" loading="lazy" alt="Testimoni" width="420" height="560"></div>
@@ -459,7 +454,6 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 
 <!-- ===== DISTRIBUTOR ACCORDION ===== -->
-<span class="section-tracker" data-section-name="accordionDp"></span>
 <div id="mganik-distributor-wrapper">
   <div class="search-container">
     <div class="input-wrapper">
@@ -478,7 +472,6 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 
 <!-- ===== MDC SECTION ===== -->
-<span class="section-tracker" data-section-name="mdcSalesChannel"></span>
 <section class="mdc-section">
   <div class="section-img-wrapper">
     <img class="section-img" src="https://mganik-assets.pages.dev/img/dwxufi4x8m8t5lst33ie.webp" alt="mGanik Diabetes Corner" loading="lazy" decoding="async" width="420" height="420">
@@ -498,7 +491,6 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 
 <!-- ===== NO OUTLET WA BUTTON ===== -->
-<span class="section-tracker" data-section-name="ccomNoOutlet"></span>
 <div class="wa-btn-wrapper">
   <button id="CCOM-No-Outlet" class="whatsapp-button"
     data-message="Salam kenal, saya lihat iklan *mGanik Metafiber* di sosmed. Boleh dibantu untuk order?"
@@ -511,7 +503,6 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="section-img-wrapper">
   <img class="section-img" src="https://mganik-assets.pages.dev/img/b0ra8cqbbwubxyxs7tek.webp" alt="Beli di Marketplace" loading="lazy" decoding="async" width="420" height="280">
 </div>
-<span class="section-tracker" data-section-name="mpPusatButtons"></span>
 <section data-aos="fade-up" data-aos-delay="200" style="padding:16px 0 0">
   <div class="mp-row">
     <a href="https://tk.tokopedia.com/ZSmLXYqrT/" target="_blank" id="MPSH-Tokopedia" class="mp-btn" aria-label="Order via Tokopedia">
@@ -630,7 +621,7 @@ window.inboundId=inboundId;
 
 /* ---------- 3. section_tracker ---------- */
 (function(){
-  var LINE=0.27,trackers=[],ticking=false,ready=false;
+  var LINE=0.27,trackers=[],ticking=false,initialized=false;
   var nodes=document.querySelectorAll('.section-tracker');
   for(var i=0;i<nodes.length;i++){
     var name=nodes[i].getAttribute('data-section-name')||('section_'+(i+1));
@@ -639,6 +630,11 @@ window.inboundId=inboundId;
   function check(){
     ticking=false;
     var vh=window.innerHeight||document.documentElement.clientHeight,lineY=vh*LINE;
+    if(!initialized){
+      for(var i=0;i<trackers.length;i++){trackers[i].prevTop=trackers[i].el.getBoundingClientRect().top;}
+      initialized=true;
+      return;
+    }
     for(var i=0;i<trackers.length;i++){
       var t=trackers[i];if(t.triggered||!t.el)continue;
       var top=t.el.getBoundingClientRect().top;
@@ -646,15 +642,14 @@ window.inboundId=inboundId;
       t.prevTop=top;
     }
   }
-  function req(){if(!ready||ticking)return;ticking=true;requestAnimationFrame(check);}
+  function req(){if(ticking)return;ticking=true;requestAnimationFrame(check);}
   function activate(){
-    if(ready)return;ready=true;
-    ['scroll','touchstart','click'].forEach(function(e){window.removeEventListener(e,activate);});
+    if(initialized)return;
     req();
     window.addEventListener('scroll',req,{passive:true});
     window.addEventListener('resize',req);
   }
-  ['scroll','touchstart','click'].forEach(function(e){window.addEventListener(e,activate,{passive:true});});
+  ['scroll','touchstart','click'].forEach(function(e){window.addEventListener(e,activate,{once:true,passive:true});});
 })();
 
 /* ---------- 4. ccom_mdcs_button_handler ---------- */
