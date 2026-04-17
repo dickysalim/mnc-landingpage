@@ -109,6 +109,7 @@
 
     /* ===== AOS FADE-UP ===== */
     [data-aos]{opacity:0;transform:translateY(24px);transition:opacity .6s ease .2s,transform .6s ease .2s}
+    .section-tracker{display:none}
     [data-aos].aos-animate{opacity:1;transform:translateY(0)}
 
     /* ===== MARKETPLACE ===== */
@@ -176,7 +177,7 @@
     #mganik-distributor-wrapper .result-header{text-align:center;margin-bottom:15px;color:#333;width:100%}
 
     /* ===== CONTENT-VISIBILITY (below-fold paint savings) ===== */
-    .carousel,#trackSection_testiVideo,#mganik-distributor-wrapper,.site-footer{content-visibility:auto;contain-intrinsic-size:auto 600px}
+    .carousel,#mganik-distributor-wrapper,.site-footer{content-visibility:auto;contain-intrinsic-size:auto 600px}
 
     /* ===== FOOTER ===== */
     .site-footer{background:#683b11;color:#fdf8ee;padding:25px;width:100%}
@@ -258,24 +259,28 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="sidebar-overlay" id="sidebar-overlay"></div>
 
 <!-- ===== HERO ===== -->
+<span class="section-tracker" data-section-name="hookIntro"></span>
 <div class="section-img-wrapper">
-  <img id="trackSection_hookIntro" class="section-img" src="https://mganik-assets.pages.dev/img/vdq0frxtjxwc5xu7vgi7.webp" alt="mGanik Metafiber" fetchpriority="high" loading="eager" decoding="async" width="360" height="640">
+  <img class="section-img" src="https://mganik-assets.pages.dev/img/vdq0frxtjxwc5xu7vgi7.webp" alt="mGanik Metafiber" fetchpriority="high" loading="eager" decoding="async" width="360" height="640">
 </div>
 
 <!-- ===== CONTENT IMAGES ===== -->
+<span class="section-tracker" data-section-name="pointOfContent"></span>
 <div class="section-img-wrapper">
-  <img id="trackSection_pointOfContent" class="section-img" src="https://mganik-assets.pages.dev/img/bjuhkaqjaqn1mls9d1le.webp" alt="Kenapa mGanik Metafiber" loading="lazy" decoding="async" width="420" height="630">
+  <img class="section-img" src="https://mganik-assets.pages.dev/img/bjuhkaqjaqn1mls9d1le.webp" alt="Kenapa mGanik Metafiber" loading="lazy" decoding="async" width="420" height="630">
 </div>
+<span class="section-tracker" data-section-name="bridgeToProduct"></span>
 <div class="section-img-wrapper">
-  <img id="trackSection_bridgeToProduct" class="section-img" src="https://mganik-assets.pages.dev/img/e0abqkhmyb2r4gfumz3a.webp" alt="mGanik Produk" loading="lazy" decoding="async" width="420" height="560">
+  <img class="section-img" src="https://mganik-assets.pages.dev/img/e0abqkhmyb2r4gfumz3a.webp" alt="mGanik Produk" loading="lazy" decoding="async" width="420" height="560">
 </div>
 
 <!-- Phase 1 ends here. Phase 2 is hidden and revealed as user scrolls. -->
 <span id="phase1-end-trigger"></span>
 <div id="phase2-content" style="display:none">
 
+<span class="section-tracker" data-section-name="productIntro"></span>
 <div class="section-img-wrapper">
-  <img id="trackSection_productIntro" class="section-img" src="https://mganik-assets.pages.dev/img/rlhezbc96mrm0gw2dxgi.webp" alt="Pengenalan Produk" loading="lazy" decoding="async" width="420" height="560">
+  <img class="section-img" src="https://mganik-assets.pages.dev/img/rlhezbc96mrm0gw2dxgi.webp" alt="Pengenalan Produk" loading="lazy" decoding="async" width="420" height="560">
 </div>
 
 <!-- ===== MAIN YOUTUBE VIDEO ===== -->
@@ -294,12 +299,14 @@ document.addEventListener('DOMContentLoaded', function() {
 </section>
 
 <!-- ===== PRODUCT PRICE OFFER ===== -->
+<span class="section-tracker" data-section-name="productPriceOffer"></span>
 <div class="section-img-wrapper">
-  <img id="trackSection_productPriceOffer" class="section-img" src="https://mganik-assets.pages.dev/img/dvjqurqqljftczc9zrku.webp" alt="Harga Spesial mGanik" loading="lazy" decoding="async" width="420" height="560">
+  <img class="section-img" src="https://mganik-assets.pages.dev/img/dvjqurqqljftczc9zrku.webp" alt="Harga Spesial mGanik" loading="lazy" decoding="async" width="420" height="560">
 </div>
 
 <!-- ===== CCOM MAIN WA BUTTON ===== -->
-<section id="trackSection_ccomMainOffer">
+<span class="section-tracker" data-section-name="ccomMainOffer"></span>
+<section>
   <div class="wa-btn-wrapper">
     <button id="CCOM-Main-Offer" class="whatsapp-button"
       data-message="Salam kenal, saya lihat iklan *mGanik Metafiber* di sosmed. Boleh dibantu untuk order?"
@@ -310,12 +317,14 @@ document.addEventListener('DOMContentLoaded', function() {
 </section>
 
 <!-- ===== CREDIBILITY IMAGE 1 (FIRST — tracker fires here only) ===== -->
+<span class="section-tracker" data-section-name="credibilityAndProof"></span>
 <div class="section-img-wrapper">
-  <img id="trackSection_credibilityAndProof" class="section-img" src="https://mganik-assets.pages.dev/img/jjco2emdutmhv48mybks.webp" alt="Bukti Keberhasilan mGanik" loading="lazy" decoding="async" width="420" height="420">
+  <img class="section-img" src="https://mganik-assets.pages.dev/img/jjco2emdutmhv48mybks.webp" alt="Bukti Keberhasilan mGanik" loading="lazy" decoding="async" width="420" height="420">
 </div>
 
 <!-- ===== VIDEO TESTIMONIALS (3 YT Facades) ===== -->
-<section id="trackSection_testiVideo">
+<span class="section-tracker" data-section-name="testiVideo"></span>
+<section>
   <div class="video-list">
     <div class="video-item">
       <div class="video-container">
@@ -347,7 +356,8 @@ document.addEventListener('DOMContentLoaded', function() {
 <p class="disclaimer-text"><b>*disclaimer:</b> Hasil yang didapatkan setiap individu bisa berbeda-beda</p>
 
 <!-- ===== CAROUSEL A — 3 images ===== -->
-<section id="trackSection_testiPhoto1" class="carousel" aria-label="Foto testimoni 1">
+<span class="section-tracker" data-section-name="testiPhoto1"></span>
+<section class="carousel" aria-label="Foto testimoni 1">
   <div class="carousel-track" role="list">
     <div class="carousel-slide" role="listitem"><img src="https://mganik-assets.pages.dev/img/ejgj7qh85gqppzvvk1rt.webp" loading="lazy" alt="Testimoni" width="420" height="560"></div>
     <div class="carousel-slide" role="listitem"><img src="https://mganik-assets.pages.dev/img/x77ijfbz6nomlibftaso.webp" loading="lazy" alt="Testimoni" width="420" height="560"></div>
@@ -367,7 +377,8 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 
 <!-- ===== CAROUSEL B — 17 images ===== -->
-<section id="trackSection_testiPhoto2" class="carousel" aria-label="Foto testimoni 2">
+<span class="section-tracker" data-section-name="testiPhoto2"></span>
+<section class="carousel" aria-label="Foto testimoni 2">
   <div class="carousel-track" role="list">
     <div class="carousel-slide" role="listitem"><img src="https://mganik-assets.pages.dev/img/ricwqskzhegtwuq9vr2x.webp" loading="lazy" alt="Testimoni" width="420" height="560"></div>
     <div class="carousel-slide" role="listitem"><img src="https://mganik-assets.pages.dev/img/spg7udrebemxcvjbtmyl.webp" loading="lazy" alt="Testimoni" width="420" height="560"></div>
@@ -399,7 +410,8 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 
 <!-- ===== CAROUSEL C — 12 images ===== -->
-<section id="trackSection_testiPhoto3" class="carousel" aria-label="Foto testimoni 3">
+<span class="section-tracker" data-section-name="testiPhoto3"></span>
+<section class="carousel" aria-label="Foto testimoni 3">
   <div class="carousel-track" role="list">
     <div class="carousel-slide" role="listitem"><img src="https://mganik-assets.pages.dev/img/ei02aznjfuya7hasbw9u.webp" loading="lazy" alt="Testimoni" width="420" height="560"></div>
     <div class="carousel-slide" role="listitem"><img src="https://mganik-assets.pages.dev/img/lt8r3dwwppfak2wfhzn4.webp" loading="lazy" alt="Testimoni" width="420" height="560"></div>
@@ -441,12 +453,13 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="section-img-wrapper">
   <img class="section-img" src="https://mganik-assets.pages.dev/img/ecnrer3kuxgbervwectw.webp" alt="mGanik" loading="lazy" decoding="async" width="420" height="280">
 </div>
+<span class="section-tracker" data-section-name="salesChannel"></span>
 <div class="section-img-wrapper">
-  <img id="trackSection_salesChannel" class="section-img" src="https://mganik-assets.pages.dev/img/mjsouua3pazqyjhsy0wd.webp" alt="Cara Beli mGanik" loading="lazy" decoding="async" width="420" height="420">
+  <img class="section-img" src="https://mganik-assets.pages.dev/img/mjsouua3pazqyjhsy0wd.webp" alt="Cara Beli mGanik" loading="lazy" decoding="async" width="420" height="420">
 </div>
 
 <!-- ===== DISTRIBUTOR ACCORDION ===== -->
-<span id="trackSection_accordionDp"></span>
+<span class="section-tracker" data-section-name="accordionDp"></span>
 <div id="mganik-distributor-wrapper">
   <div class="search-container">
     <div class="input-wrapper">
@@ -465,7 +478,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 
 <!-- ===== MDC SECTION ===== -->
-<span id="trackSection_mdcSalesChannel"></span>
+<span class="section-tracker" data-section-name="mdcSalesChannel"></span>
 <section class="mdc-section">
   <div class="section-img-wrapper">
     <img class="section-img" src="https://mganik-assets.pages.dev/img/dwxufi4x8m8t5lst33ie.webp" alt="mGanik Diabetes Corner" loading="lazy" decoding="async" width="420" height="420">
@@ -485,7 +498,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 
 <!-- ===== NO OUTLET WA BUTTON ===== -->
-<span id="trackSection_ccomNoOutlet"></span>
+<span class="section-tracker" data-section-name="ccomNoOutlet"></span>
 <div class="wa-btn-wrapper">
   <button id="CCOM-No-Outlet" class="whatsapp-button"
     data-message="Salam kenal, saya lihat iklan *mGanik Metafiber* di sosmed. Boleh dibantu untuk order?"
@@ -498,7 +511,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="section-img-wrapper">
   <img class="section-img" src="https://mganik-assets.pages.dev/img/b0ra8cqbbwubxyxs7tek.webp" alt="Beli di Marketplace" loading="lazy" decoding="async" width="420" height="280">
 </div>
-<span id="trackSection_mpPusatButtons"></span>
+<span class="section-tracker" data-section-name="mpPusatButtons"></span>
 <section data-aos="fade-up" data-aos-delay="200" style="padding:16px 0 0">
   <div class="mp-row">
     <a href="https://tk.tokopedia.com/ZSmLXYqrT/" target="_blank" id="MPSH-Tokopedia" class="mp-btn" aria-label="Order via Tokopedia">
@@ -516,8 +529,9 @@ document.addEventListener('DOMContentLoaded', function() {
 </section>
 
 <!-- ===== FOOTER IMAGE ===== -->
+<span class="section-tracker" data-section-name="footer"></span>
 <div class="section-img-wrapper">
-  <img id="trackSection_footer" class="section-img" src="https://mganik-assets.pages.dev/img/e4ncbzxj3k8eejrekmw1.webp" alt="mGanik Nutrition" loading="lazy" decoding="async" width="420" height="210">
+  <img class="section-img" src="https://mganik-assets.pages.dev/img/e4ncbzxj3k8eejrekmw1.webp" alt="mGanik Nutrition" loading="lazy" decoding="async" width="420" height="210">
 </div>
 
 <!-- ===== FOOTER ===== -->
@@ -614,27 +628,33 @@ window.inboundId=inboundId;
   obs.observe(trigger);
 })();
 
-/* ---------- 3. SECTION TRACKER ---------- */
+/* ---------- 3. section_tracker ---------- */
 (function(){
-  var LINE=0.27,trackers={},ticking=false;
-  var nodes=document.querySelectorAll("[id^='trackSection'],[id^='TrackSection']");
-  var seen=new Set(),order=1;
+  var LINE=0.27,trackers=[],ticking=false,ready=false;
+  var nodes=document.querySelectorAll('.section-tracker');
   for(var i=0;i<nodes.length;i++){
-    var id=nodes[i].id,name=id.replace(/^(trackSection|TrackSection)\s*[-_]\s*/i,'').trim();
-    if(!seen.has(name)){seen.add(name);trackers[id]={el:nodes[i],name:name||id,triggered:false,prevTop:Infinity,order:order++};}
+    var name=nodes[i].getAttribute('data-section-name')||('section_'+(i+1));
+    trackers.push({el:nodes[i],name:name,order:i+1,triggered:false,prevTop:Infinity});
   }
   function check(){
-    ticking=false;var vh=window.innerHeight||document.documentElement.clientHeight,lineY=vh*LINE;
-    for(var id in trackers){
-      if(!trackers.hasOwnProperty(id))continue;
-      var t=trackers[id];if(t.triggered||!t.el)continue;
+    ticking=false;
+    var vh=window.innerHeight||document.documentElement.clientHeight,lineY=vh*LINE;
+    for(var i=0;i<trackers.length;i++){
+      var t=trackers[i];if(t.triggered||!t.el)continue;
       var top=t.el.getBoundingClientRect().top;
       if(top<=lineY&&t.prevTop>lineY){t.triggered=true;window.dataLayer.push({event:'trackSection',section_name:t.name,section_order:t.order});}
       t.prevTop=top;
     }
   }
-  function req(){if(!ticking){ticking=true;requestAnimationFrame(check);}}
-  req();window.addEventListener('scroll',req,{passive:true});window.addEventListener('resize',req);
+  function req(){if(!ready||ticking)return;ticking=true;requestAnimationFrame(check);}
+  function activate(){
+    if(ready)return;ready=true;
+    ['scroll','touchstart','click'].forEach(function(e){window.removeEventListener(e,activate);});
+    req();
+    window.addEventListener('scroll',req,{passive:true});
+    window.addEventListener('resize',req);
+  }
+  ['scroll','touchstart','click'].forEach(function(e){window.addEventListener(e,activate,{passive:true});});
 })();
 
 /* ---------- 4. ccom_mdcs_button_handler ---------- */
