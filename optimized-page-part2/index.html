@@ -109,7 +109,7 @@
 
     /* ===== AOS FADE-UP ===== */
     [data-aos]{opacity:0;transform:translateY(24px);transition:opacity .6s ease .2s,transform .6s ease .2s}
-    .section-tracker{display:none}
+    .section-tracker{display:block;height:0;overflow:hidden}
     [data-aos].aos-animate{opacity:1;transform:translateY(0)}
 
     /* ===== MARKETPLACE ===== */
@@ -628,6 +628,8 @@ window.inboundId=inboundId;
     var nodes=document.querySelectorAll('.section-tracker');
     for(var i=0;i<nodes.length;i++){
       var name=nodes[i].getAttribute('data-section-name')||('section_'+(i+1));
+      /* skip elements inside display:none containers (e.g. Phase 2 not yet revealed) */
+      if(!nodes[i].offsetParent)continue;
       /* skip if already registered */
       var exists=false;
       for(var j=0;j<trackers.length;j++){if(trackers[j].name===name){exists=true;break;}}
