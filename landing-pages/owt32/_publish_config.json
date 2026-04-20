@@ -1,8 +1,7 @@
 {
   "lp_id": "owt32",
   "publish_ver": 1,
-  "path": "routing-system-test",
-  "enabled": true,
+  "sku": "MTA",
   "positions": {
     "A": {
       "variant_id": "ah3kl",

@@ -36,7 +36,7 @@ export default {
       return new Response('Page not found', { status: 404 });
     }
 
-    const lpFolderId = routesManifest[lpSlug];
+    const lpFolderId = Object.keys(routesManifest).find(key => routesManifest[key] === lpSlug);
     if (!lpFolderId) {
       return new Response('Page not found', { status: 404 });
     }
@@ -84,17 +84,17 @@ export default {
     });
 
     // 5. Build the dataLayer script to inject as first child of <head>
-    const dataLayerScript = `<script>
-window.dataLayer = window.dataLayer || [];
-dataLayer.push({
-  lp_id: "${publishConfig.lp_id}",
-  publish_ver: ${publishConfig.publish_ver},
-  sku: "${publishConfig.sku}",
-  position: "${selectedPosition}",
-  variant_id: "${selectedVariant.variant_id}",
-  variant_ver: ${selectedVariant.variant_ver}
-});
-</script>`;
+    const dataLayerScript = '<script>\n' +
+      'window.dataLayer = window.dataLayer || [];\n' +
+      'dataLayer.push({\n' +
+      '  lp_id: "' + publishConfig.lp_id + '",\n' +
+      '  publish_ver: ' + publishConfig.publish_ver + ',\n' +
+      '  sku: "' + publishConfig.sku + '",\n' +
+      '  position: "' + selectedPosition + '",\n' +
+      '  variant_id: "' + selectedVariant.variant_id + '",\n' +
+      '  variant_ver: ' + selectedVariant.variant_ver + '\n' +
+      '});\n' +
+      '</script>';
 
     // Fetch global blocks
     const fetchBlock = async (blockPath) => {
