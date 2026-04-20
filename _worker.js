@@ -3,7 +3,7 @@ export default {
     const url = new URL(request.url);
 
     // Don't rewrite global-blocks files or static assets
-    if (url.pathname.startsWith('/global-blocks/') || url.pathname.includes('.')) {
+    if (url.pathname.startsWith('/global-blocks/') || url.pathname.startsWith('/global-utilities/') || url.pathname.includes('.')) {
       return env.ASSETS.fetch(request);
     }
 
@@ -73,8 +73,8 @@ export default {
     try { manifest = JSON.parse(manifestText); } catch {}
 
     const [headerHtml, footerHtml] = await Promise.all([
-      fetchBlock('/global-blocks/' + (manifest['block001'] || 'block001-header.html')),
-      fetchBlock('/global-blocks/' + (manifest['block002'] || 'block002-footer.html')),
+      fetchBlock('/global-utilities/util001-header.html'),
+      fetchBlock('/global-utilities/util002-footer.html'),
     ]);
 
     return new HTMLRewriter()
