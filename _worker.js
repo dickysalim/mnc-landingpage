@@ -107,14 +107,18 @@ export default {
     let blocksManifest = {};
     try { blocksManifest = JSON.parse(blocksManifestText); } catch {}
 
-    const [headerHtml, footerHtml] = await Promise.all([
+    const [headerHtml, footerHtml, globalCss] = await Promise.all([
       fetchBlock('/global-utilities/util001-header.html'),
       fetchBlock('/global-utilities/util002-footer.html'),
+      fetchBlock('/global-utilities/util003-global.css'),
     ]);
 
     return new HTMLRewriter()
       .on('head', {
         element(el) { el.prepend(dataLayerScript, { html: true }); }
+      })
+      .on('link[href="/global-utilities/util003-global.css"]', {
+        element(el) { el.replace('<style>' + globalCss + '</style>', { html: true }); }
       })
       .on('#global-header', {
         element(el) { el.replace(headerHtml, { html: true }); }
