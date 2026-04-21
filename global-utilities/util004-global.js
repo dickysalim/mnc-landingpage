@@ -105,23 +105,6 @@ window.inboundId=inboundId;
   };
 })();
 
-/* ---------- 3b. viewOffer auto-tracker — fires once on first visible CTA button ---------- */
-(function(){
-  var fired = false;
-  var btn = document.querySelector('.whatsapp-button, .whatsapp-button-mdc');
-  if(!btn) return;
-  var obs = new IntersectionObserver(function(entries, o){
-    entries.forEach(function(entry){
-      if(entry.isIntersecting && !fired){
-        fired = true;
-        window.dataLayer.push({event:'trackSection', section_name:'viewOffer', section_order: 999});
-        o.disconnect();
-      }
-    });
-  }, {threshold: 0.1});
-  obs.observe(btn);
-})();
-
 /* ---------- 4. ccom_mdcs_button_handler ---------- */
 [{sel:'.whatsapp-button',phone:'6281584021443',pre:'CC-',ch:'CCOM'},
  {sel:'.whatsapp-button-mdc',phone:'6282195277642',pre:'DC-',ch:'MDCS'}
