@@ -35,6 +35,8 @@ window.inboundId=inboundId;
 /* ---------- 3. section_tracker ---------- */
 (function(){
   var LINE=0.27,trackers=[],ticking=false,baselineSet=false;
+  /* sections that need a different trigger line (fraction of vh) */
+  var LINE_OVERRIDES={'viewOffer':0.75};
 
   function buildTrackers(){
     var nodes=document.querySelectorAll('.section-tracker');
@@ -65,9 +67,10 @@ window.inboundId=inboundId;
 
   function check(){
     ticking=false;
-    var vh=window.innerHeight||document.documentElement.clientHeight,lineY=vh*LINE;
+    var vh=window.innerHeight||document.documentElement.clientHeight;
     for(var i=0;i<trackers.length;i++){
       var t=trackers[i];if(t.triggered||!t.el)continue;
+      var lineY=vh*(LINE_OVERRIDES[t.name]!==undefined?LINE_OVERRIDES[t.name]:LINE);
       var top=t.el.getBoundingClientRect().top;
       if(top<=lineY&&t.prevTop>lineY){t.triggered=true;window.dataLayer.push({event:'trackSection',section_name:t.name,section_order:t.order});}
       t.prevTop=top;
@@ -80,9 +83,10 @@ window.inboundId=inboundId;
     buildTrackers();
     setBaseline();
     /* fire sections already inside the trigger zone on load (e.g. hookIntro) */
-    var vh=window.innerHeight||document.documentElement.clientHeight,lineY=vh*LINE;
+    var vh=window.innerHeight||document.documentElement.clientHeight;
     for(var i=0;i<trackers.length;i++){
       var t=trackers[i];if(t.triggered)continue;
+      var lineY=vh*(LINE_OVERRIDES[t.name]!==undefined?LINE_OVERRIDES[t.name]:LINE);
       if(t.prevTop<=lineY){t.triggered=true;window.dataLayer.push({event:'trackSection',section_name:t.name,section_order:t.order});}
     }
     window.addEventListener('scroll',req,{passive:true});
@@ -95,9 +99,10 @@ window.inboundId=inboundId;
   window._refreshTrackers=function(){
     buildTrackers();
     /* fire any Phase 2 sections already in view */
-    var vh=window.innerHeight||document.documentElement.clientHeight,lineY=vh*LINE;
+    var vh=window.innerHeight||document.documentElement.clientHeight;
     for(var i=0;i<trackers.length;i++){
       var t=trackers[i];if(t.triggered)continue;
+      var lineY=vh*(LINE_OVERRIDES[t.name]!==undefined?LINE_OVERRIDES[t.name]:LINE);
       var top=t.el.getBoundingClientRect().top;
       t.prevTop=top;
       if(top<=lineY){t.triggered=true;window.dataLayer.push({event:'trackSection',section_name:t.name,section_order:t.order});}
