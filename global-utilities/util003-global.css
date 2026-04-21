@@ -78,6 +78,15 @@ button{cursor:pointer}
 .dot{width:8px;height:8px;border-radius:50%;border:none;background:#ccc;padding:0;cursor:pointer;transition:background .2s,transform .2s}
 .dot.active{background:#683b11;transform:scale(1.25)}
 
+/* ===== VIDEO CAROUSEL ===== */
+.carousel--video{padding:0}
+.carousel--video .carousel-slide{padding:0 20px}
+.vc-ratio{position:relative;width:100%;padding-bottom:56.25%;background:#000;border-radius:8px;overflow:hidden}
+.vc-ratio .yt-facade{position:absolute;inset:0;width:100%;height:100%;border-radius:0}
+.vc-ratio .yt-facade img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.vc-ratio .yt-facade iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+.carousel--video .carousel-dots{padding:8px 0 12px;background:#f5f3eb}
+
 /* ===== DISCLAIMER ===== */
 .disclaimer-text{font-size:15px;font-style:italic;padding:0 20px 10px;background:#f5f3eb}
 

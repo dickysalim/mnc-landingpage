@@ -162,6 +162,9 @@ document.querySelectorAll('.yt-facade').forEach(function(facade){
     iframe.src='https://www.youtube-nocookie.com/embed/'+vid+'?autoplay=1&rel=0';
     iframe.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
     iframe.allowFullscreen=true;
+    /* If inside a video carousel, stop auto-advance */
+    var carousel=facade.closest('.carousel--video');
+    if(carousel&&typeof carousel._stopAutoplay==='function')carousel._stopAutoplay();
     facade.innerHTML='';facade.appendChild(iframe);facade.style.cursor='default';
     facade.removeEventListener('click',play);facade.removeEventListener('keydown',onKey);
   }
@@ -201,6 +204,8 @@ document.querySelectorAll('.carousel').forEach(function(wrapper){
   visObs.observe(wrapper);
   wrapper.addEventListener('touchstart',stop,{passive:true});
   wrapper.addEventListener('touchend',function(){setTimeout(start,3000);},{passive:true});
+  /* Expose stop for video carousels — facade handler calls this when playback starts */
+  wrapper._stopAutoplay=stop;
 });
 
 /* ---------- 8. AOS POLYFILL ---------- */
