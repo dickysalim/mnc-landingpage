@@ -12,15 +12,7 @@ var inboundId=(function(){
 })();
 window.inboundId=inboundId;
 
-/* ---------- 2. GTM already loaded async — fire pageview_confirmed when hero visible ---------- */
-(function(){
-  var hero=document.querySelector('.section-tracker[data-section-name="hookIntro"]');
-  if(!hero)return;
-  var obs=new IntersectionObserver(function(entries,o){
-    entries.forEach(function(entry){if(entry.isIntersecting){window.dataLayer.push({event:'pageview_confirmed'});o.disconnect();}});
-  },{threshold:0.1});
-  obs.observe(hero);
-})();
+
 
 /* ---------- 2b. PHASE 2 REVEAL (200px before trigger enters viewport) ---------- */
 (function(){
@@ -111,6 +103,23 @@ window.inboundId=inboundId;
       if(top<=lineY){t.triggered=true;window.dataLayer.push({event:'trackSection',section_name:t.name,section_order:t.order});}
     }
   };
+})();
+
+/* ---------- 3b. viewOffer auto-tracker — fires once on first visible CTA button ---------- */
+(function(){
+  var fired = false;
+  var btn = document.querySelector('.whatsapp-button, .whatsapp-button-mdc');
+  if(!btn) return;
+  var obs = new IntersectionObserver(function(entries, o){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting && !fired){
+        fired = true;
+        window.dataLayer.push({event:'trackSection', section_name:'viewOffer', section_order: 999});
+        o.disconnect();
+      }
+    });
+  }, {threshold: 0.1});
+  obs.observe(btn);
 })();
 
 /* ---------- 4. ccom_mdcs_button_handler ---------- */

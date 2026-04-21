@@ -32,6 +32,7 @@ button{cursor:pointer}
 .section-img-wrapper{width:100%;overflow:hidden}
 .section-img-wrapper img{width:100%;height:auto;display:block}
 .section-img{display:block;width:100%;height:auto}
+.hero-img{display:block;width:100%;height:auto}
 .carousel-slide img{width:100%;height:auto}
 .mp-btn img{width:100%;height:auto}
 
