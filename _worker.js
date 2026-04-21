@@ -69,10 +69,10 @@ export default {
     }
 
     const selectedVariant = positions[selectedPosition];
-    const variantFolder = selectedPosition === 'A' ? 'variant-a' : 'variant-b';
+    const variantFile = selectedPosition === 'A' ? 'variant-a.html' : 'variant-b.html';
 
-    // 4. Fetch the selected variant's index.html
-    const variantPath = `/landing-pages/${lpFolderId}/${variantFolder}/index.html`;
+    // 4. Fetch the selected variant HTML
+    const variantPath = `/landing-pages/${lpFolderId}/${variantFile}`;
     const variantHtml = await fetchAsset(variantPath);
 
     if (!variantHtml) {
