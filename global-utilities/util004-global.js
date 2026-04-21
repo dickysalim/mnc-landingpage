@@ -1,3 +1,7 @@
+/* ---------- 0. SCROLL RESTORATION ---------- */
+if('scrollRestoration' in history){history.scrollRestoration='manual';}
+window.scrollTo(0,0);
+
 (function(){'use strict';
 
 /* ---------- 1. inboundId_generator ---------- */
