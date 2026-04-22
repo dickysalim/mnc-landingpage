@@ -1,6 +1,6 @@
 /* ---------- 0. SCROLL RESTORATION ---------- */
 if('scrollRestoration' in history){history.scrollRestoration='manual';}
-window.scrollTo(0,0);
+requestAnimationFrame(function(){window.scrollTo(0,0);});
 
 (function(){'use strict';
 
@@ -38,23 +38,29 @@ window.inboundId=inboundId;
   /* sections that need a different trigger line (fraction of vh) */
   var LINE_OVERRIDES={'viewOffer':0.75};
 
+  /* cache the Phase 2 container once to avoid repeated DOM lookups */
+  var phase2El=document.getElementById('phase2-content');
+
+  function isHiddenInPhase2(node){
+    /* fast check: if the node lives inside phase2-content and it's still display:none, skip */
+    return phase2El&&phase2El.style.display==='none'&&phase2El.contains(node);
+  }
+
   function buildTrackers(){
     var nodes=document.querySelectorAll('.section-tracker');
     for(var i=0;i<nodes.length;i++){
       var name=nodes[i].getAttribute('data-section-name')||('section_'+(i+1));
-      /* skip elements inside display:none containers (e.g. Phase 2 not yet revealed) */
-      if(!nodes[i].offsetParent)continue;
+      /* skip elements inside display:none containers — no forced reflow */
+      if(isHiddenInPhase2(nodes[i]))continue;
       /* skip if already registered */
       var exists=false;
       for(var j=0;j<trackers.length;j++){if(trackers[j].name===name){exists=true;break;}}
       if(!exists)trackers.push({el:nodes[i],name:name,triggered:false,prevTop:Infinity});
     }
-    /* recalculate order by DOM position */
-    trackers.sort(function(a,b){
-      var ar=a.el.getBoundingClientRect().top+window.scrollY;
-      var br=b.el.getBoundingClientRect().top+window.scrollY;
-      return ar-br;
-    });
+    /* recalculate order by DOM position — batch all reads first, then sort */
+    var scrollY=window.scrollY;
+    for(var i=0;i<trackers.length;i++){trackers[i]._top=trackers[i].el.getBoundingClientRect().top+scrollY;}
+    trackers.sort(function(a,b){return a._top-b._top;});
     for(var i=0;i<trackers.length;i++){trackers[i].order=i+1;}
   }
 

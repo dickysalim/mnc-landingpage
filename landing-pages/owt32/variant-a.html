@@ -16,15 +16,15 @@
   <!-- 2. SECOND: Hero image preload — highest priority -->
   <link rel="preload" as="image" href="https://mganik-assets.pages.dev/img/vdq0frxtjxwc5xu7vgi7.webp" fetchpriority="high">
 
-  <!-- 3. THIRD: CSS — non-blocking -->
+  <!-- 3. THIRD: Global CSS (inlined by worker at edge) -->
+  <link rel="stylesheet" href="/global-utilities/util003-global.css">
+
+  <!-- 4. FOURTH: Fonts — non-blocking -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"></noscript>
 
-  <!-- 4. LAST: GTM dataLayer init only — no GTM script yet -->
+  <!-- 5. LAST: GTM dataLayer init only — no GTM script yet -->
   <script>window.dataLayer=window.dataLayer||[];</script>
-
-  <!-- Global CSS -->
-  <link rel="stylesheet" href="/global-utilities/util003-global.css">
 
 </head>
 <body>
@@ -34,7 +34,7 @@
 <!-- ===== HERO ===== -->
 <span class="section-tracker" data-section-name="hookIntro"></span>
 <div class="section-img-wrapper">
-  <img class="hero-img" src="https://mganik-assets.pages.dev/img/vdq0frxtjxwc5xu7vgi7.webp" alt="mGanik Metafiber" fetchpriority="high" loading="eager" decoding="async" width="360" height="640">
+  <img class="hero-img" src="https://mganik-assets.pages.dev/img/vdq0frxtjxwc5xu7vgi7.webp" alt="mGanik Metafiber" fetchpriority="high" loading="eager" decoding="sync" width="360" height="640" style="aspect-ratio:360/640">
 </div>
 
 <!-- ===== CONTENT IMAGES ===== -->
