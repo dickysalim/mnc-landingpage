@@ -6,12 +6,8 @@
     "A": {
       "variant_id": "ah3kl",
       "variant_ver": 1,
-      "split": 50
+      "split": 100
     },
-    "B": {
-      "variant_id": "bx9mq",
-      "variant_ver": 1,
-      "split": 50
-    }
+    "B": null
   }
 }
