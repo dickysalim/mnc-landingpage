@@ -8,6 +8,10 @@
       "variant_ver": 1,
       "split": 100
     },
-    "B": null
+    "B": {
+      "variant_id": null,
+      "variant_ver": null,
+      "split": 0
+    }
   }
 }
