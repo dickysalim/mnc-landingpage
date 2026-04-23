@@ -194,6 +194,11 @@ document.querySelectorAll('.carousel').forEach(function(wrapper){
   function setActive(idx){cur=idx;dots.forEach(function(d,i){d.classList.toggle('active',i===idx);});}
   function goTo(idx){setActive(idx);track.scrollTo({left:idx*track.offsetWidth,behavior:'smooth'});}
   dots.forEach(function(d,i){d.addEventListener('click',function(){goTo(i);stop();});});
+  /* Arrow buttons */
+  var btnPrev=wrapper.querySelector('.carousel-arrow--prev');
+  var btnNext=wrapper.querySelector('.carousel-arrow--next');
+  if(btnPrev)btnPrev.addEventListener('click',function(){goTo((cur-1+n)%n);stop();});
+  if(btnNext)btnNext.addEventListener('click',function(){goTo((cur+1)%n);stop();});
   /* IntersectionObserver to sync dots on swipe */
   var io=new IntersectionObserver(function(entries){
     entries.forEach(function(e){
