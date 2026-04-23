@@ -207,8 +207,8 @@ document.querySelectorAll('.carousel').forEach(function(wrapper){
   },{root:track,threshold:0.5});
   slides.forEach(function(s){io.observe(s);});
   /* Auto-advance — only when carousel is visible in viewport */
-  var timer=null;
-  function start(){if(timer)return;timer=setInterval(function(){goTo((cur+1)%n);},3500);}
+  var timer=null,locked=false;
+  function start(){if(timer||locked)return;timer=setInterval(function(){goTo((cur+1)%n);},3500);}
   function stop(){clearInterval(timer);timer=null;}
   var visObs=new IntersectionObserver(function(entries){
     entries.forEach(function(e){if(e.isIntersecting)start();else stop();});
@@ -216,8 +216,9 @@ document.querySelectorAll('.carousel').forEach(function(wrapper){
   visObs.observe(wrapper);
   wrapper.addEventListener('touchstart',stop,{passive:true});
   wrapper.addEventListener('touchend',function(){setTimeout(start,3000);},{passive:true});
-  /* Expose stop for video carousels — facade handler calls this when playback starts */
-  wrapper._stopAutoplay=stop;
+  /* Expose stop for video carousels — facade handler calls this when playback starts.
+     Sets locked=true so touchend can never revive auto-advance after a video is played. */
+  wrapper._stopAutoplay=function(){locked=true;stop();};
 });
 
 /* ---------- 8. AOS POLYFILL ---------- */
